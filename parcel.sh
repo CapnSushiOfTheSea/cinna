@@ -2,8 +2,8 @@
 
 PROGRAM_FILES_DIR="$HOME/.program_files"
 BASE_URL="https://parcel.pixspla.net"
-VERSION="1.0"
-VERSIONTITLE="allstar"
+VERSION="1.1"
+VERSIONTITLE="houdini"
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -14,19 +14,28 @@ CYAN='\033[0;36m'
 NC='\033[0m'
 
 function check_for_updates() {
-    latest_version=$(curl -s "$BASE_URL/version")
-    if [[ "$latest_version" != "$VERSION" ]]; then
-        echo -e "${YELLOW}A new version of Parcel is available: $latest_version.${NC}"
-        echo -e "You can update Parcel using 'parcel update'."
+    if wget --spider "$BASE_URL" 2>/dev/null; then
+        latest_version=$(curl -s "$BASE_URL/version")
+        if [[ "$latest_version" != "$VERSION" ]]; then
+            echo -e "${YELLOW}A new version of Parcel is available: $latest_version.${NC}"
+            echo -e "You can update Parcel using 'parcel update'."
+        fi
+    else
+        echo -e "${RED}Error: Cannot connect to the Parcel server. Parcel needs an internet connection to run. Try again later."
+        exit 1
     fi
 }
 
 function update_parcel() {
-    echo -e "Updating Parcel..."
-    rm -rf "$PROGRAM_FILES_DIR/parcel"
-    wget "$BASE_URL/parcel" -P "$PROGRAM_FILES_DIR" 2> /dev/null
-    chmod +x "$PROGRAM_FILES_DIR/parcel"
-    echo -e "${GREEN}Parcel updated successfully.${NC}"
+    if wget --spider "$BASE_URL/parcel" 2>/dev/null; then
+        echo -e "Updating Parcel..."
+        rm -rf "$PROGRAM_FILES_DIR/parcel"
+        wget "$BASE_URL/parcel" -P "$PROGRAM_FILES_DIR" 2> /dev/null
+        chmod +x "$PROGRAM_FILES_DIR/parcel"
+        echo -e "${GREEN}Parcel updated successfully.${NC}"
+    else
+        echo -e "${RED}Error:${NC} Cannot connect to https://parcel.pixspla.net/ to download Parcel. Try again later."
+    fi
 }
 
 check_for_updates
