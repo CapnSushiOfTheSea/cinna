@@ -41,7 +41,7 @@ function update_parcel() {
     fi
 }
 
-check_for_updates
+# check_for_updates
 
 if [[ ! ":$PATH:" == *":$PROGRAM_FILES_DIR:"* ]]; then
     echo -e "${RED}Warning:${NC} $PROGRAM_FILES_DIR is not in your PATH. Consider adding it to your PATH."
@@ -181,6 +181,20 @@ case "$1" in
     "--version" | "-v")
         echo -e "${GREEN}Parcel${NC} ${PURPLE}v$VERSION${NC} (codename '$VERSIONTITLE')"
         echo -e "Created by ${BLUE}NoodleDX${NC}"
+        ;;
+    "config")
+        case "$2" in
+            "dir")
+                if [[ -d "$3" ]]; then
+                    echo "Directory exists, function not ready yet"
+                else
+                    echo "Directory does not exist, function not ready yet"
+                fi
+                ;;
+            *)
+                echo "Invalid option"
+                ;;
+        esac
         ;;
     "")
         help_message
