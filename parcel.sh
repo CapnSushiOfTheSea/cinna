@@ -2,8 +2,8 @@
 
 PROGRAM_FILES_DIR="$HOME/.program_files"
 BASE_URL="https://parcel.pixspla.net"
-VERSION="1.1"
-VERSIONTITLE="houdini"
+VERSION="1.2"
+VERSIONTITLE="razzmatazz"
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -16,9 +16,12 @@ NC='\033[0m'
 function check_for_updates() {
     if wget --spider "$BASE_URL" 2>/dev/null; then
         latest_version=$(curl -s "$BASE_URL/version")
-        if [[ "$latest_version" != "$VERSION" ]]; then
+        if [[ "$latest_version" > "$VERSION" ]]; then
             echo -e "${YELLOW}A new version of Parcel is available: $latest_version.${NC}"
             echo -e "You can update Parcel using 'parcel update'."
+        elif [[ "$latest_version" < "$VERSION" ]]; then
+            echo -e "${YELLOW}Woah Development Version !! You are Using $VERSION, and the latest is $latest_version.${NC}"
+            echo -e "You can update Parcel using 'parcel update' if you want lmao."
         fi
     else
         echo -e "${RED}Error: Cannot connect to the Parcel server. Parcel needs an internet connection to run. Try again later."
