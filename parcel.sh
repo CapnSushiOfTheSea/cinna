@@ -10,7 +10,6 @@ GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 BLUE='\033[0;34m'
 PURPLE='\033[0;35m'
-CYAN='\033[0;36m'
 NC='\033[0m'
 
 function check_for_updates() {
@@ -81,7 +80,7 @@ function remove_package() {
     package_name="$1"
 
     if [[ -f "$PROGRAM_FILES_DIR/$package_name" ]]; then
-        rm -rf "$PROGRAM_FILES_DIR/$package_name"
+        rm -rf "$PROGRAM_FILES_DIR:?/$package_name"
         if [[ -d "$PROGRAM_FILES_DIR/$package_name-files" ]]; then
             rm -r "$PROGRAM_FILES_DIR/$package_name-files"
         fi
@@ -99,7 +98,7 @@ function upgrade_package() {
         if wget --spider "$package_url/$package_name" 2>/dev/null; then
             echo -e "Upgrading package ${GREEN}$package_name${NC}"
             if [[ -f "$PROGRAM_FILES_DIR/$package_name" ]]; then
-                rm -rf "$PROGRAM_FILES_DIR/$package_name"
+                rm -rf "$PROGRAM_FILES_DIR:?/$package_name"
                 if [[ -d "$PROGRAM_FILES_DIR/$package_name-files" ]]; then
                     rm -r "$PROGRAM_FILES_DIR/$package_name-files"
                 fi
