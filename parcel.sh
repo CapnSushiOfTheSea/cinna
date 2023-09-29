@@ -41,7 +41,7 @@ function update_parcel() {
     fi
 }
 
-# check_for_updates
+check_for_updates
 
 if [[ ! ":$PATH:" == *":$PROGRAM_FILES_DIR:"* ]]; then
     echo -e "${RED}Warning:${NC} $PROGRAM_FILES_DIR is not in your PATH. Consider adding it to your PATH."
