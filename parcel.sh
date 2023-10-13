@@ -142,7 +142,7 @@ function info_package() {
 }
 
 function help_message() {
-    echo -e "${GREEN}Parcel${NC}: Noodle's Package Manager For Stupid Programs"
+    echo -e "${GREEN}Parcel${NC}: The stupidest package manager known to mankind"
     echo ""
     echo -e "${PURPLE}Commands${NC}"
     echo -e "  ${BLUE}get${NC} ${YELLOW}<package_name>${NC}     - Install a package."
