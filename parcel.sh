@@ -193,6 +193,9 @@ case "$1" in
                     echo "Directory does not exist, function not ready yet"
                 fi
                 ;;
+            "repo")
+                echo "Function not ready yet, I don't care if that URL exists or not LMAO"
+                ;;
             *)
                 echo "Invalid option"
                 ;;
