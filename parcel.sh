@@ -40,8 +40,6 @@ function update_parcel() {
     fi
 }
 
-check_for_updates
-
 if [[ ! ":$PATH:" == *":$PROGRAM_FILES_DIR:"* ]]; then
     echo -e "${RED}Warning:${NC} $PROGRAM_FILES_DIR is not in your PATH. Consider adding it to your PATH."
 fi
@@ -160,18 +158,23 @@ function help_message() {
 
 case "$1" in
     "update")
+        check_for_updates
         update_parcel
         ;;
     "get")
+        check_for_updates
         get_package "$2"
         ;;
     "remove")
+        check_for_updates
         remove_package "$2"
         ;;
     "upgrade")
+        check_for_updates
         upgrade_package "$2"
         ;;
     "info")
+        check_for_updates
         info_package "$2"
         ;;
     "--help" | "-h")
