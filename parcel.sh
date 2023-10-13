@@ -145,15 +145,28 @@ function help_message() {
     echo -e "${GREEN}Parcel${NC}: The stupidest package manager known to mankind"
     echo ""
     echo -e "${PURPLE}Commands${NC}"
-    echo -e "  ${BLUE}get${NC} ${YELLOW}<package_name>${NC}     - Install a package."
-    echo -e "  ${BLUE}remove${NC} ${YELLOW}<package_name>${NC}  - Remove a package."
-    echo -e "  ${BLUE}upgrade${NC} ${YELLOW}<package_name>${NC} - Upgrade a package."
-    echo -e "  ${BLUE}info${NC} ${YELLOW}<package_name>${NC}    - Get package information."
+    echo -e "  ${BLUE}get${NC} ${YELLOW}<package name>${NC}     - Install a package."
+    echo -e "  ${BLUE}remove${NC} ${YELLOW}<package name>${NC}  - Remove a package."
+    echo -e "  ${BLUE}upgrade${NC} ${YELLOW}<package name>${NC} - Upgrade a package."
+    echo -e "  ${BLUE}info${NC} ${YELLOW}<package name>${NC}    - Get package information."
     echo -e "  ${BLUE}update${NC}                 - Update Parcel."
+    echo -e "  ${BLUE}config ${YELLOW}<option>${NC}        - Configure Parcel."
+    echo -e "    ${YELLOW}(Use parcel config -h for it's help command.)${NC}"
     echo ""
     echo -e "${PURPLE}Arguments${NC}"
     echo -e "  ${BLUE}--help, -h${NC}             - Show this help message."
     echo -e "  ${BLUE}--version, -v${NC}          - Show the version of Parcel."
+}
+
+function config_help_message() {
+    echo -e "${GREEN}Parcel${NC}: The stupidest package manager known to mankind"
+    echo ""
+    echo -e "${PURPLE}Config Options${NC}"
+    echo -e "  ${BLUE}dir${NC} ${YELLOW}<package name>${NC}     - Set the package install directory."
+    echo -e "  ${BLUE}repo${NC} ${YELLOW}<package name>${NC}    - Set the package repo you'd like to use."
+    echo ""
+    echo -e "${PURPLE}Arguments${NC}"
+    echo -e "  ${BLUE}--help, -h${NC}             - Show this help message."
 }
 
 case "$1" in
@@ -195,6 +208,9 @@ case "$1" in
                 ;;
             "repo")
                 echo "Function not ready yet, I don't care if that URL exists or not LMAO"
+                ;;
+            "-h")
+                config_help_message
                 ;;
             *)
                 echo "Invalid option"
