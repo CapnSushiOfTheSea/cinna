@@ -1,6 +1,7 @@
 #!/bin/bash
 
 PROGRAM_FILES_DIR="$HOME/.program_files"
+CONFIG_FILE="$HOME/.parcel_config"
 BASE_URL="https://parcel.pixspla.net"
 VERSION="1.2"
 VERSIONTITLE="razzmatazz"
@@ -11,6 +12,12 @@ YELLOW='\033[0;33m'
 BLUE='\033[0;34m'
 PURPLE='\033[0;35m'
 NC='\033[0m'
+
+function read_config() {
+    if [ -f "$CONFIG_FILE" ]; then
+        source "$CONFIG_FILE"
+    fi
+}
 
 function check_for_updates() {
     if wget --spider "$BASE_URL" 2>/dev/null; then
@@ -39,6 +46,8 @@ function update_parcel() {
         echo -e "${RED}Error:${NC} Cannot connect to https://parcel.pixspla.net/ to download Parcel. Try again later."
     fi
 }
+
+read_config
 
 if [[ ! ":$PATH:" == *":$PROGRAM_FILES_DIR:"* ]]; then
     echo -e "${RED}Warning:${NC} $PROGRAM_FILES_DIR is not in your PATH. Consider adding it to your PATH."
@@ -201,9 +210,11 @@ case "$1" in
         case "$2" in
             "dir")
                 if [[ -d "$3" ]]; then
-                    echo "Directory exists, function not ready yet"
+                    PROGRAM_FILES_DIR="$3"
+                    echo "PROGRAM_FILES_DIR=\"$PROGRAM_FILES_DIR\"" > "$CONFIG_FILE"
+                    echo "Package install directory set to $PROGRAM_FILES_DIR."
                 else
-                    echo "Directory does not exist, function not ready yet"
+                    echo "Error: Directory does not exist."
                 fi
                 ;;
             "repo")
