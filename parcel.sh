@@ -278,6 +278,17 @@ case "$1" in
         sleep .5
         echo "  === THE END ==="
         ;;
+    "agony")
+        echo "      __"
+        echo " _   / /"
+        echo "(_) | | "
+        echo " _  | | "
+        echo "(_) | | "
+        echo "     \_\\"
+        echo "\"ouhh im dying\""
+        echo ""
+        echo "ouhh secret doo be do be do bah"
+        ;;
     "")
         help_message
         ;;
