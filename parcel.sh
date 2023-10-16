@@ -250,6 +250,34 @@ case "$1" in
                 ;;
         esac
         ;;
+    "credits")
+        echo "                          _ "
+        echo " _ __   __ _ _ __ ___ ___| |"
+        echo "| '_ \ / _\` | '__/ __/ _ \ |"
+        echo "| |_) | (_| | | | (_|  __/ |"
+        echo "| .__/ \__,_|_|  \___\___|_|"
+        echo "|_|  \"The Stupidest Package Manager Ever\"   "
+        echo ""
+        sleep 1
+        echo "Credits"
+        echo "-------------"
+        sleep 1
+        echo "  NoodleDX - Creator"
+        sleep 1
+        echo "  BoxelLogica - Being the best boyfriend ever"
+        sleep 1
+        echo "  CribonGarge - The \"Not So\" Mega Man"
+        sleep 1
+        echo "  StackOverflow - Being a programmer's best friend"
+        sleep 1
+        echo "  The Dark Arts - Allowing me to use black magic to code this"
+        sleep 1
+        echo "  The people behind Linux - Making Bash (and linux I guess)"
+        sleep 1
+        echo "  And thank YOU, for using Parcel !!"
+        sleep .5
+        echo "  === THE END ==="
+        ;;
     "")
         help_message
         ;;
