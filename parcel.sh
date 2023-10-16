@@ -20,8 +20,8 @@ function read_config() {
 }
 
 function check_for_updates() {
-    if wget --spider "$BASE_URL" 2>/dev/null; then
-        latest_version=$(curl -s "$BASE_URL/version")
+    if wget --spider "https://parcel.pixspla.net/" 2>/dev/null; then
+        latest_version=$(curl -s "https://parcel.pixspla.net/version")
         if [[ "$latest_version" > "$VERSION" ]]; then
             echo -e "${YELLOW}A new version of Parcel is available: $latest_version.${NC}"
             echo -e "You can update Parcel using 'parcel update'."
@@ -36,10 +36,10 @@ function check_for_updates() {
 }
 
 function update_parcel() {
-    if wget --spider "$BASE_URL/parcel" 2>/dev/null; then
+    if wget --spider "https://parcel.pixspla.net/parcel" 2>/dev/null; then
         echo -e "Updating Parcel..."
         rm -rf "$PROGRAM_FILES_DIR/parcel"
-        wget "$BASE_URL/parcel" -P "$PROGRAM_FILES_DIR" 2> /dev/null
+        wget "https://parcel.pixspla.net/parcel" -P "$PROGRAM_FILES_DIR" 2> /dev/null
         chmod +x "$PROGRAM_FILES_DIR/parcel"
         echo -e "${GREEN}Parcel updated successfully.${NC}"
     else
