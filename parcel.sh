@@ -218,7 +218,29 @@ case "$1" in
                 fi
                 ;;
             "repo")
-                echo "Function not ready yet, I don't care if that URL exists or not LMAO"
+                echo "Running checks..."
+                if wget --spider "$3" 2>/dev/null; then
+                    echo "URL exists."
+                else
+                    echo "URL does not exist."
+                    exit 1
+                fi
+                if wget --spider "$3/repo" 2>/dev/null; then
+                    echo "Repo exists."
+                else
+                    echo "Repo ($3/repo) does not exist."
+                    exit 1
+                fi
+                if wget --spider "$3/repo/packages" 2>/dev/null; then
+                    echo "Packages exist."
+                else
+                    echo "Packages ($3/repo/packages) do not exist."
+                    exit 1
+                fi
+                echo "Test complete. Adding URL to config..."
+                BASE_URL="$3"
+                echo "BASE_URL=\"$BASE_URL\"" > "$CONFIG_FILE"
+                echo "Repo URL set to $BASE_URL."
                 ;;
             "-h")
                 config_help_message
