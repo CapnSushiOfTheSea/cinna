@@ -1,5 +1,7 @@
 # parcel
-the stupidest package manager with the stupidest code known to mankind
+the stupidest package manager known to mankind
+
+why did I write this in bash oh my gosh im suffering
 
 ok dude literally just go to https://parcel.pixspla.net/ i aint copyin allat
 
