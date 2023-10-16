@@ -243,7 +243,7 @@ case "$1" in
                 echo "BASE_URL=\"$BASE_URL\"" > "$CONFIG_FILE"
                 echo "Repo URL set to $BASE_URL."
                 ;;
-            "--help" | "-h")
+            "--help" | "-h" | "")
                 config_help_message
                 ;;
             *)
