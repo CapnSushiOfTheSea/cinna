@@ -163,7 +163,7 @@ function help_message() {
     echo -e "  ${BLUE}info${NC} ${YELLOW}<package name>${NC}    - Get package information."
     echo -e "  ${BLUE}update${NC}                 - Update Parcel."
     echo -e "  ${BLUE}config ${YELLOW}<option>${NC}        - Configure Parcel."
-    echo -e "    ${YELLOW}(Use parcel config -h for it's help command.)${NC}"
+    echo -e "    ${YELLOW}(Use "parcel config -h" for it's help command.)${NC}"
     echo -e "  ${BLUE}credits${NC}                - Show Parcel credits."
     echo ""
     echo -e "${PURPLE}Arguments${NC}"
