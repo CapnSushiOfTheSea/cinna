@@ -121,6 +121,9 @@ function upgrade_package() {
                 rm "$PROGRAM_FILES_DIR/$package_name-files.zip"
             fi
 
+            if [[ -f "$PROGRAM_FILES_DIR/$package_name.1"]]; then
+                rm "$PROGRAM_FILES_DIR/$package_name.1"
+            fi
             chmod +x "$PROGRAM_FILES_DIR/$package_name"
             echo -e "Package ${GREEN}$package_name${NC} upgraded successfully."
         else
