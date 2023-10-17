@@ -154,32 +154,37 @@ function info_package() {
 }
 
 function help_message() {
-    echo -e "${GREEN}Parcel${NC}: The stupidest package manager known to mankind"
-    echo ""
-    echo -e "${PURPLE}Commands${NC}"
-    echo -e "  ${BLUE}get${NC} ${YELLOW}<package name>${NC}     - Install a package."
-    echo -e "  ${BLUE}remove${NC} ${YELLOW}<package name>${NC}  - Remove a package."
-    echo -e "  ${BLUE}upgrade${NC} ${YELLOW}<package name>${NC} - Upgrade a package."
-    echo -e "  ${BLUE}info${NC} ${YELLOW}<package name>${NC}    - Get package information."
-    echo -e "  ${BLUE}update${NC}                 - Update Parcel."
-    echo -e "  ${BLUE}config ${YELLOW}<option>${NC}        - Configure Parcel."
-    echo -e "    ${YELLOW}(Use "parcel config -h" for it's help command.)${NC}"
-    echo -e "  ${BLUE}credits${NC}                - Show Parcel credits."
-    echo ""
-    echo -e "${PURPLE}Arguments${NC}"
-    echo -e "  ${BLUE}--help, -h${NC}             - Show this help message."
-    echo -e "  ${BLUE}--version, -v${NC}          - Show the version of Parcel."
-}
-
-function config_help_message() {
-    echo -e "${GREEN}Parcel${NC}: The stupidest package manager known to mankind"
-    echo ""
-    echo -e "${PURPLE}Config Options${NC}"
-    echo -e "  ${BLUE}dir${NC} ${YELLOW}<package name>${NC}     - Set the package install directory."
-    echo -e "  ${BLUE}repo${NC} ${YELLOW}<package name>${NC}    - Set the package repo you'd like to use."
-    echo ""
-    echo -e "${PURPLE}Arguments${NC}"
-    echo -e "  ${BLUE}--help, -h${NC}             - Show this help message."
+    case $1 in
+        "main")
+            echo -e "${GREEN}Parcel${NC}: The stupidest package manager known to mankind"
+            echo ""
+            echo -e "${PURPLE}Commands${NC}"
+            echo -e "  ${BLUE}get${NC} ${YELLOW}<package name>${NC}     - Install a package."
+            echo -e "  ${BLUE}remove${NC} ${YELLOW}<package name>${NC}  - Remove a package."
+            echo -e "  ${BLUE}upgrade${NC} ${YELLOW}<package name>${NC} - Upgrade a package."
+            echo -e "  ${BLUE}info${NC} ${YELLOW}<package name>${NC}    - Get package information."
+            echo -e "  ${BLUE}update${NC}                 - Update Parcel."
+            echo -e "  ${BLUE}config ${YELLOW}<option>${NC}        - Configure Parcel."
+            echo -e "    ${YELLOW}(Use "parcel config -h" for it's help command.)${NC}"
+            echo -e "  ${BLUE}credits${NC}                - Show Parcel credits."
+            echo ""
+            echo -e "${PURPLE}Arguments${NC}"
+            echo -e "  ${BLUE}--help, -h${NC}             - Show this help message."
+            echo -e "  ${BLUE}--version, -v${NC}          - Show the version of Parcel."
+            ;;
+        "config")
+            echo -e "${GREEN}Parcel${NC}: The stupidest package manager known to mankind"
+            echo ""
+            echo -e "${PURPLE}Config Options${NC}"
+            echo -e "  ${BLUE}dir${NC} ${YELLOW}<package name>${NC}     - Set the package install directory."
+            echo -e "  ${BLUE}repo${NC} ${YELLOW}<package name>${NC}    - Set the package repo you'd like to use."
+            echo ""
+            echo -e "${PURPLE}Arguments${NC}"
+            echo -e "  ${BLUE}--help, -h${NC}             - Show this help message."
+            ;;
+        *)
+            echo "Error: Not a help command"
+        esac
 }
 
 case "$1" in
@@ -204,7 +209,7 @@ case "$1" in
         info_package "$2"
         ;;
     "--help" | "-h")
-        help_message
+        help_message "main"
         ;;
     "--version" | "-v")
         echo -e "${GREEN}Parcel${NC} ${PURPLE}v$VERSION${NC} (codename '$VERSIONTITLE')"
@@ -247,7 +252,7 @@ case "$1" in
                 echo "Repo URL set to $BASE_URL."
                 ;;
             "--help" | "-h" | "")
-                config_help_message
+                help_message "config"
                 ;;
             *)
                 echo "Invalid option"
@@ -297,11 +302,11 @@ case "$1" in
         echo "Function quite not ready yet. Please check back later!" # How do I even
         ;;
     "")
-        help_message
+        help_message "main"
         ;;
     *)
         echo -e "${RED}Error:${NC} Unknown command: $1"
-        help_message
+        help_message "main"
         exit 1
         ;;
 esac
