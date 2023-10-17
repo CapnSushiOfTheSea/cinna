@@ -3,8 +3,8 @@
 PROGRAM_FILES_DIR="$HOME/.program_files"
 CONFIG_FILE="$HOME/.parcel_config"
 BASE_URL="https://parcel.pixspla.net"
-VERSION="1.2"
-VERSIONTITLE="razzmatazz"
+VERSION="1.3"
+VERSIONTITLE="sleepyhead"
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
