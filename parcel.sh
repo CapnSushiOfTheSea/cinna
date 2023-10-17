@@ -290,6 +290,9 @@ case "$1" in
         echo ""
         echo "ouhh secret doo be do be do bah"
         ;;
+    "gui")
+        echo "Function quite not ready yet. Please check back later!" # How do I even
+        ;;
     "")
         help_message
         ;;
