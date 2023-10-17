@@ -287,17 +287,6 @@ case "$1" in
         sleep .5
         echo "  === THE END ==="
         ;;
-    "agony")
-        echo "      __"
-        echo " _   / /"
-        echo "(_) | | "
-        echo " _  | | "
-        echo "(_) | | "
-        echo "     \_\\"
-        echo "\"ouhh im dying\""
-        echo ""
-        echo "ouhh secret doo be do be do bah"
-        ;;
     "gui")
         echo "Function quite not ready yet. Please check back later!" # How do I even
         ;;
