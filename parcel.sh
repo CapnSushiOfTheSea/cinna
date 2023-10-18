@@ -287,9 +287,6 @@ case "$1" in
         sleep .5
         echo "  === THE END ==="
         ;;
-    "gui")
-        echo "Function quite not ready yet. Please check back later!" # How do I even
-        ;;
     "")
         help_message "main"
         ;;
