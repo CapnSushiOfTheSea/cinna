@@ -1,8 +1,8 @@
 #!/bin/bash
 
-PROGRAM_FILES_DIR="$HOME/.program_files"
-CONFIG_FILE="$HOME/.parcel_config"
-BASE_URL="https://parcel.pixspla.net"
+INSTALLDIRECTORY="$HOME/.program_files"
+CFG="$HOME/.parcel_config"
+REPO="https://parcel.pixspla.net"
 VERSION="1.3"
 VERSIONTITLE="sleepyhead"
 
@@ -14,8 +14,8 @@ PURPLE='\033[0;35m'
 NC='\033[0m'
 
 function read_config() {
-    if [ -f "$CONFIG_FILE" ]; then
-        source "$CONFIG_FILE"
+    if [ -f "$CFG" ]; then
+        source "$CFG"
     fi
 }
 
@@ -38,9 +38,9 @@ function check_for_updates() {
 function update_parcel() {
     if wget --spider "https://parcel.pixspla.net/parcel" 2>/dev/null; then
         echo -e "Updating Parcel..."
-        rm -rf "$PROGRAM_FILES_DIR/parcel"
-        wget "https://parcel.pixspla.net/parcel" -P "$PROGRAM_FILES_DIR" 2> /dev/null
-        chmod +x "$PROGRAM_FILES_DIR/parcel"
+        rm -rf "$INSTALLDIRECTORY/parcel"
+        wget "https://parcel.pixspla.net/parcel" -P "$INSTALLDIRECTORY" 2> /dev/null
+        chmod +x "$INSTALLDIRECTORY/parcel"
         echo -e "${GREEN}Parcel updated successfully.${NC}"
     else
         echo -e "${RED}Error:${NC} Cannot connect to https://parcel.pixspla.net/ to download Parcel. Try again later."
@@ -49,33 +49,33 @@ function update_parcel() {
 
 read_config
 
-if [[ ! ":$PATH:" == *":$PROGRAM_FILES_DIR:"* ]]; then
-    echo -e "${RED}Warning:${NC} $PROGRAM_FILES_DIR is not in your PATH. Consider adding it to your PATH."
+if [[ ! ":$PATH:" == *":$INSTALLDIRECTORY:"* ]]; then
+    echo -e "${RED}Warning:${NC} $INSTALLDIRECTORY is not in your PATH. Consider adding it to your PATH."
 fi
 
 function get_package() {
     package_name="$1"
-    package_url="$BASE_URL/repo/packages/$package_name"
+    package_url="$REPO/repo/packages/$package_name"
 
-    if [[ -f "$PROGRAM_FILES_DIR/$package_name" ]]; then
+    if [[ -f "$INSTALLDIRECTORY/$package_name" ]]; then
         echo -e "Package ${GREEN}$package_name${NC} is already installed."
     else
         if wget --spider "$package_url/$package_name" 2>/dev/null; then
-            mkdir -p "$PROGRAM_FILES_DIR"
+            mkdir -p "$INSTALLDIRECTORY"
 
             echo -e "Installing package ${GREEN}$package_name${NC}"
             echo -e "Getting ${GREEN}'$package_url/$package_name'${NC}"
-            wget "$package_url/$package_name" -P "$PROGRAM_FILES_DIR" 2> /dev/null
+            wget "$package_url/$package_name" -P "$INSTALLDIRECTORY" 2> /dev/null
 
             if wget --spider "$package_url/$package_name-files.zip" 2>/dev/null; then
                 echo -e "Getting ${GREEN}'$package_url/$package_name-files.zip'${NC}"
-                wget "$package_url/$package_name-files.zip" -P "$PROGRAM_FILES_DIR" 2> /dev/null
-                unzip "$PROGRAM_FILES_DIR/$package_name-files.zip" -d "$PROGRAM_FILES_DIR/$package_name-files" > /dev/null
+                wget "$package_url/$package_name-files.zip" -P "$INSTALLDIRECTORY" 2> /dev/null
+                unzip "$INSTALLDIRECTORY/$package_name-files.zip" -d "$INSTALLDIRECTORY/$package_name-files" > /dev/null
                 echo "Cleaning up..."
-                rm "$PROGRAM_FILES_DIR/$package_name-files.zip"
+                rm "$INSTALLDIRECTORY/$package_name-files.zip"
             fi
 
-            chmod +x "$PROGRAM_FILES_DIR/$package_name"
+            chmod +x "$INSTALLDIRECTORY/$package_name"
             echo -e "Package ${GREEN}$package_name${NC} installed successfully."
         else
             echo -e "${RED}Error:${NC} Package ${GREEN}$package_name${NC} not found."
@@ -86,10 +86,10 @@ function get_package() {
 function remove_package() {
     package_name="$1"
 
-    if [[ -f "$PROGRAM_FILES_DIR/$package_name" ]]; then
-        rm -rf "$PROGRAM_FILES_DIR/$package_name"
-        if [[ -d "$PROGRAM_FILES_DIR/$package_name-files" ]]; then
-            rm -r "$PROGRAM_FILES_DIR/$package_name-files"
+    if [[ -f "$INSTALLDIRECTORY/$package_name" ]]; then
+        rm -rf "$INSTALLDIRECTORY/$package_name"
+        if [[ -d "$INSTALLDIRECTORY/$package_name-files" ]]; then
+            rm -r "$INSTALLDIRECTORY/$package_name-files"
         fi
         echo -e "Package ${GREEN}$package_name${NC} removed."
     else
@@ -99,32 +99,32 @@ function remove_package() {
 
 function upgrade_package() {
     package_name="$1"
-    package_url="$BASE_URL/repo/packages/$package_name"
+    package_url="$REPO/repo/packages/$package_name"
 
-    if [[ -f "$PROGRAM_FILES_DIR/$package_name" ]]; then
+    if [[ -f "$INSTALLDIRECTORY/$package_name" ]]; then
         if wget --spider "$package_url/$package_name" 2>/dev/null; then
             echo -e "Upgrading package ${GREEN}$package_name${NC}"
-            if [[ -f "$PROGRAM_FILES_DIR/$package_name" ]]; then
-                rm -rf "$PROGRAM_FILES_DIR/$package_name"
-                if [[ -d "$PROGRAM_FILES_DIR/$package_name-files" ]]; then
-                    rm -r "$PROGRAM_FILES_DIR/$package_name-files"
+            if [[ -f "$INSTALLDIRECTORY/$package_name" ]]; then
+                rm -rf "$INSTALLDIRECTORY/$package_name"
+                if [[ -d "$INSTALLDIRECTORY/$package_name-files" ]]; then
+                    rm -r "$INSTALLDIRECTORY/$package_name-files"
                 fi
             fi
             echo -e "Getting ${GREEN}'$package_url/$package_name'${NC}"
-            wget "$package_url/$package_name" -P "$PROGRAM_FILES_DIR" 2> /dev/null
+            wget "$package_url/$package_name" -P "$INSTALLDIRECTORY" 2> /dev/null
 
             if wget --spider "$package_url/$package_name-files.zip" 2>/dev/null; then
                 echo -e "Getting ${GREEN}'$package_url/$package_name-files.zip'${NC}"
-                wget "$package_url/$package_name-files.zip" -P "$PROGRAM_FILES_DIR" 2> /dev/null
-                unzip "$PROGRAM_FILES_DIR/$package_name-files.zip" -d "$PROGRAM_FILES_DIR/$package_name-files" > /dev/null
+                wget "$package_url/$package_name-files.zip" -P "$INSTALLDIRECTORY" 2> /dev/null
+                unzip "$INSTALLDIRECTORY/$package_name-files.zip" -d "$INSTALLDIRECTORY/$package_name-files" > /dev/null
                 echo "Cleaning up..."
-                rm "$PROGRAM_FILES_DIR/$package_name-files.zip"
+                rm "$INSTALLDIRECTORY/$package_name-files.zip"
             fi
 
-            if [[ -f "$PROGRAM_FILES_DIR/$package_name.1" ]]; then
-                rm "$PROGRAM_FILES_DIR/$package_name.1"
+            if [[ -f "$INSTALLDIRECTORY/$package_name.1" ]]; then
+                rm "$INSTALLDIRECTORY/$package_name.1"
             fi
-            chmod +x "$PROGRAM_FILES_DIR/$package_name"
+            chmod +x "$INSTALLDIRECTORY/$package_name"
             echo -e "Package ${GREEN}$package_name${NC} upgraded successfully."
         else
             echo -e "${RED}Error:${NC} Package ${GREEN}$package_name${NC} not found."
@@ -136,18 +136,18 @@ function upgrade_package() {
 
 function info_package() {
     package_name="$1"
-    package_info_url="$BASE_URL/repo/packages/$package_name/metadata"
+    package_info_url="$REPO/repo/packages/$package_name/metadata"
 
     if wget --spider "$package_info_url" 2>/dev/null; then
-        wget -N "$package_info_url" -O "$PROGRAM_FILES_DIR/$package_name-info.txt" 2> /dev/null
+        wget -N "$package_info_url" -O "$INSTALLDIRECTORY/$package_name-info.txt" 2> /dev/null
 
         while IFS= read -r line; do
             key=$(echo "$line" | cut -d'=' -f1 | tr -d '[:space:]')
             value=$(echo "$line" | cut -d'=' -f2- | sed 's/^ *//')
             echo -e "${YELLOW}${key}:${NC} ${PURPLE}${value}${NC}"
-        done < "$PROGRAM_FILES_DIR/$package_name-info.txt"
+        done < "$INSTALLDIRECTORY/$package_name-info.txt"
         
-        rm "$PROGRAM_FILES_DIR/$package_name-info.txt"
+        rm "$INSTALLDIRECTORY/$package_name-info.txt"
     else
         echo -e "${RED}Error:${NC} Package info for ${GREEN}$package_name${NC} not found."
     fi
@@ -219,9 +219,9 @@ case "$1" in
         case "$2" in
             "dir")
                 if [[ -d "$3" ]]; then
-                    PROGRAM_FILES_DIR="$3"
-                    echo "PROGRAM_FILES_DIR=\"$PROGRAM_FILES_DIR\"" > "$CONFIG_FILE"
-                    echo "Package install directory set to $PROGRAM_FILES_DIR."
+                    INSTALLDIRECTORY="$3"
+                    echo "INSTALLDIRECTORY=\"$INSTALLDIRECTORY\"" > "$CFG"
+                    echo "Package install directory set to $INSTALLDIRECTORY."
                 else
                     echo "Error: Directory does not exist."
                 fi
@@ -247,9 +247,9 @@ case "$1" in
                     exit 1
                 fi
                 echo "Test complete. Adding URL to config..."
-                BASE_URL="$3"
-                echo "BASE_URL=\"$BASE_URL\"" > "$CONFIG_FILE"
-                echo "Repo URL set to $BASE_URL."
+                REPO="$3"
+                echo "REPO=\"$REPO\"" > "$CFG"
+                echo "Repo URL set to $REPO."
                 ;;
             "--help" | "-h" | "")
                 help_message "config"
