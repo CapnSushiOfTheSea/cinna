@@ -1,7 +1,4 @@
-- complete rework of the help command
-    - make it so arguments work anywhere, so long as it's at the end
-    - make it so the help command shows info on specific commands if asked
-        (e.g. "parcel get --help" or like "parcel remove --help")
+- make it so arguments work anywhere, so long as it's at the end
 - add more packages to repo
 - get other people to contribute somehow
     - unnecessary but okay
