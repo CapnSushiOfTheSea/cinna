@@ -215,7 +215,7 @@ function help_message() {
             echo "  Gets package info from the repo, currently set to \"${REPO}\""
             ;;
         *)
-            echo "Error: Not a help command"
+            echo -e "${RED}Error:${NC}  Not a help command"
             ;;
         esac
 }
@@ -267,7 +267,7 @@ case "$1" in
                     echo "INSTALLDIRECTORY=\"$INSTALLDIRECTORY\"" > "$CFG"
                     echo "Package install directory set to $INSTALLDIRECTORY."
                 else
-                    echo "Error: Directory does not exist."
+                    echo -e "${RED}Error:${NC} Directory does not exist."
                 fi
                 ;;
             "repo")
@@ -275,19 +275,19 @@ case "$1" in
                 if wget --spider "$3" 2>/dev/null; then
                     echo "URL exists."
                 else
-                    echo "URL does not exist."
+                    echo -e "${RED}Error:${NC} URL does not exist."
                     exit 1
                 fi
                 if wget --spider "$3/repo" 2>/dev/null; then
                     echo "Repo exists."
                 else
-                    echo "Repo ($3/repo) does not exist."
+                    echo -e "${RED}Error:${NC} Repo ($3/repo) does not exist."
                     exit 1
                 fi
                 if wget --spider "$3/repo/packages" 2>/dev/null; then
                     echo "Packages exist."
                 else
-                    echo "Packages ($3/repo/packages) do not exist."
+                    echo -e "${RED}Error:${NC} Packages ($3/repo/packages) do not exist."
                     exit 1
                 fi
                 echo "Test complete. Adding URL to config..."
@@ -299,7 +299,7 @@ case "$1" in
                 help_message "config"
                 ;;
             *)
-                echo "Invalid option"
+                echo -e "${RED}Error:${NC} Invalid option"
                 ;;
         esac
         ;;
