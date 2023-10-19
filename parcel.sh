@@ -182,8 +182,41 @@ function help_message() {
             echo -e "${PURPLE}Arguments${NC}"
             echo -e "  ${BLUE}--help, -h${NC}             - Show this help message."
             ;;
+        "get")
+            echo -e "${GREEN}Parcel${NC}: The stupidest package manager known to mankind"
+            echo ""
+            echo -e "${PURPLE}parcel${NC} ${BLUE}get${NC} ${YELLOW}<package name>${NC}"
+            echo "  Installs a package from the repo, currently set to \"${REPO}\"."
+            ;;
+        "remove")
+            echo -e "${GREEN}Parcel${NC}: The stupidest package manager known to mankind"
+            echo ""
+            echo -e "${PURPLE}parcel${NC} ${BLUE}remove${NC} ${YELLOW}<package name>${NC}"
+            echo "  Removes an installed package from your computer."
+            ;;
+        "upgrade")
+            echo -e "${GREEN}Parcel${NC}: The stupidest package manager known to mankind"
+            echo ""
+            echo -e "${PURPLE}parcel${NC} ${BLUE}upgrade${NC} ${YELLOW}<package name>${NC}"
+            echo "  Reinstalls a package, to get the latest version."
+            echo "  Not to be confused with \"parcel update\""
+            ;;
+        "update")
+            echo -e "${GREEN}Parcel${NC}: The stupidest package manager known to mankind"
+            echo ""
+            echo -e "${PURPLE}parcel${NC} ${BLUE}update${NC} "
+            echo "  Completely reinstalls Parcel, to get the latest version."
+            echo "  Not to be confused with \"parcel upgrade\""
+            ;;
+        "info")
+            echo -e "${GREEN}Parcel${NC}: The stupidest package manager known to mankind"
+            echo ""
+            echo -e "${PURPLE}parcel${NC} ${BLUE}info${NC} ${YELLOW}<package name>${NC}"
+            echo "  Gets package info from the repo, currently set to \"${REPO}\""
+            ;;
         *)
             echo "Error: Not a help command"
+            ;;
         esac
 }
 
@@ -209,7 +242,18 @@ case "$1" in
         info_package "$2"
         ;;
     "--help" | "-h")
-        help_message "main"
+        if [ -z "$2" ]; then
+            help_message "main"
+        else
+            case "$2" in
+                "get" | "remove" | "upgrade" | "info" | "update" | "config" | "credits")
+                    help_message "$2"
+                    ;;
+                *)
+                    echo -e "${RED}Error:${NC} Unknown command: $2"
+                    ;;
+            esac
+        fi
         ;;
     "--version" | "-v")
         echo -e "${GREEN}Parcel${NC} ${PURPLE}v$VERSION${NC} (codename '$VERSIONTITLE')"
