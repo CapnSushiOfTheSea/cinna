@@ -331,6 +331,77 @@ case "$1" in
         sleep .5
         echo "  === THE END ==="
         ;;
+    "debug")
+        case $2 in
+            "test_connection_main")
+                if wget --spider "https://parcel.pixspla.net/" 2>/dev/null; then
+                    echo -e "${GREEN}Successfully connected to the Parcel servers.${NC}"
+                else
+                    echo -e "${RED}Error: Cannot connect to https://parcel.pixspla.net/${NC}"
+                fi
+                ;;
+            "test_connection_repo")
+                echo "Running checks..."
+                if wget --spider "$REPO" 2>/dev/null; then
+                    echo "URL exists."
+                else
+                    echo -e "${RED}Error:${NC} URL does not exist."
+                    exit 1
+                fi
+                if wget --spider "$REPO/repo" 2>/dev/null; then
+                    echo "Repo exists."
+                else
+                    echo -e "${RED}Error:${NC} Repo ($REPO/repo) does not exist."
+                    exit 1
+                fi
+                if wget --spider "$REPO/repo/packages" 2>/dev/null; then
+                    echo "Packages exist."
+                else
+                    echo -e "${RED}Error:${NC} Packages ($REPO/repo/packages) do not exist."
+                    exit 1
+                fi
+                echo -e "${GREEN}Successfully connected to the repo.${NC}"
+                ;;
+            "test_write")
+                if echo "test" > $INSTALLDIRECTORY/test; then
+                    echo -e "${GREEN}Successfully wrote a file.${NC}"
+                    sleep .5
+                    remove_package test >/dev/null
+                else
+                    echo -e "${RED}Error:${NC} Could not write file."
+                fi
+                ;;
+            "test_download")
+                read -p "Does the package \"cls\" exist in your repo? [y/n] " input
+                if [ $input == "y" ]; then
+                    if get_package "cls" >/dev/null; then
+                        echo -e "${GREEN}Successfully downloaded file.${NC}"
+                        sleep .5
+                        remove_package cls >/dev/null
+                    else
+                        echo -e "${RED}Error:${NC} Could not download file."
+                    fi
+                else
+                    read -p "Do you have another package for testing? [y/n] " input
+                    if [ $input = y ]; then
+                        read -p "What is it's name? " input
+                        if get_package "$input" >/dev/null; then
+                            echo -e "${GREEN}Successfully downloaded file.${NC}"
+                            sleep .5
+                            remove_package $input >/dev/null
+                        else
+                            echo -e "${RED}Error:${NC} Could not download file."
+                        fi
+                    else
+                        echo "Operation cancelled."
+                    fi
+                fi
+                ;;
+            *)
+                echo -e "${RED}Error:${NC} Invalid option: $1"
+                ;;
+        esac
+        ;;
     "")
         help_message "main"
         ;;
