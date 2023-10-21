@@ -397,6 +397,9 @@ case "$1" in
                     fi
                 fi
                 ;;
+            "contact")
+                echo "If you find an issue, contact Noodle at @noodledx on Discord."
+                ;;
             *)
                 echo -e "${RED}Error:${NC} Invalid option: $1"
                 ;;
