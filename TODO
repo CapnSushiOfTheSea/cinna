@@ -1,3 +1,4 @@
+- create parcel build tool (in progress)
 - make it so arguments work anywhere, so long as it's at the end
 - add more packages to repo
 - get other people to contribute somehow
