@@ -270,7 +270,7 @@ case "$1" in
             help_message "main"
         else
             case "$2" in
-                "get" | "remove" | "upgrade" | "info" | "update" | "config" | "credits")
+                "get" | "remove" | "upgrade" | "info" | "update" | "config" | "credits" | "list")
                     help_message "$2"
                     ;;
                 *)
