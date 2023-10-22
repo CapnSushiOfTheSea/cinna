@@ -167,6 +167,7 @@ function help_message() {
             echo -e "  ${BLUE}config ${YELLOW}<option>${NC}        - Configure Parcel."
             echo -e "    ${YELLOW}(Use "parcel config -h" for it's help command.)${NC}"
             echo -e "  ${BLUE}credits${NC}                - Show Parcel credits."
+            echo -e "  ${BLUE}list${NC}                   - Get a list of packages."
             echo ""
             echo -e "${PURPLE}Arguments${NC}"
             echo -e "  ${BLUE}--help, -h${NC}             - Show this help message."
@@ -214,10 +215,30 @@ function help_message() {
             echo -e "${PURPLE}parcel${NC} ${BLUE}info${NC} ${YELLOW}<package name>${NC}"
             echo "  Gets package info from the repo, currently set to \"${REPO}\""
             ;;
+        "list")
+            echo -e "${GREEN}Parcel${NC}: The stupidest package manager known to mankind"
+            echo ""
+            echo -e "${PURPLE}parcel${NC} ${BLUE}list${NC}"
+            echo "  Gets a list of packages from the repo, currently set to \"${REPO}\""
+            ;;
         *)
             echo -e "${RED}Error:${NC}  Not a help command"
             ;;
         esac
+}
+
+function list_packages() {
+    packages_file="$REPO/repo/packages/packages.txt"
+
+    if wget --spider "$packages_file" 2>/dev/null; then
+        while IFS= read -r line; do
+            package_name=$(echo "$line" | cut -d' ' -f1)
+            package_description=$(echo "$line" | cut -d' ' -f2-)
+            echo -e "${GREEN}${package_name}${NC} ${PURPLE}${package_description}${NC}"
+        done < <(curl -s "$packages_file")
+    else
+        echo -e "${RED}Error:${NC} Cannot connect to $packages_file. Check your internet connection or try again later."
+    fi
 }
 
 case "$1" in
@@ -240,6 +261,9 @@ case "$1" in
     "info")
         check_for_updates
         info_package "$2"
+        ;;
+    "list")
+        list_packages
         ;;
     "--help" | "-h")
         if [ -z "$2" ]; then
