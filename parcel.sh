@@ -263,6 +263,7 @@ case "$1" in
         info_package "$2"
         ;;
     "list")
+        check_for_updates
         list_packages
         ;;
     "--help" | "-h")
