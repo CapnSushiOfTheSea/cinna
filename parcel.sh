@@ -429,6 +429,23 @@ case "$1" in
                     fi
                 fi
                 ;;
+            "color_test")
+                echo -e "Color Test"
+                echo -e "============="
+                echo -e "${RED} This text is RED${NC}"
+                echo -e "${GREEN} This text is GREEN${NC}"
+                echo -e "${YELLOW} This text is YELLOW${NC}"
+                echo -e "${BLUE} This text is BLUE${NC}"
+                echo -e "${PURPLE} This text is PURPLE${NC}"
+                echo -e "${NC} This text is NORMAL${NC}"
+                echo -e "${BOLD} This text is BOLD${NC}"
+                echo -e "${DIM} This text is DIM${NC}"
+                echo -e "${ITALIC} This text is ITALIC${NC}"
+                echo -e "${UNDERLINE} This text is UNDERLINED${NC}"
+                echo -e "${BLINKING} This text is BLINKING${NC}"
+                echo -e "${REVERSE} This text is REVERSED${NC}"
+                echo -e "${INVISIBLE} This text is INVISIBLE${NC}"
+                ;;
             *)
                 echo -e "${RED}Error:${NC} Invalid option: $1"
                 ;;
