@@ -37,7 +37,7 @@ function check_for_updates() {
             echo -e "You can update Parcel using 'parcel update' if you want lmao."
         fi
     else
-        echo -e "${RED}Error: Cannot connect to the Parcel server. Parcel needs an internet connection to run. Try again later."
+        echo -e "${RED}${BOLD}Error: Cannot connect to the Parcel server. Parcel needs an internet connection to run. Try again later."
         exit 1
     fi
 }
@@ -50,7 +50,7 @@ function update_parcel() {
         chmod +x "$INSTALLDIRECTORY/parcel"
         echo -e "${GREEN}Parcel updated successfully.${NC}"
     else
-        echo -e "${RED}Error:${NC} Cannot connect to https://parcel.pixspla.net/ to download Parcel. Try again later."
+        echo -e "${RED}${BOLD}Error:${NC} Cannot connect to https://parcel.pixspla.net/ to download Parcel. Try again later."
     fi
 }
 
@@ -85,7 +85,7 @@ function get_package() {
             chmod +x "$INSTALLDIRECTORY/$package_name"
             echo -e "Package ${GREEN}$package_name${NC} installed successfully."
         else
-            echo -e "${RED}Error:${NC} Package ${GREEN}$package_name${NC} not found."
+            echo -e "${RED}${BOLD}Error:${NC} Package ${GREEN}$package_name${NC} not found."
         fi
     fi
 }
@@ -100,7 +100,7 @@ function remove_package() {
         fi
         echo -e "Package ${GREEN}$package_name${NC} removed."
     else
-        echo -e "${RED}Error:${NC} Package ${GREEN}$package_name${NC} is not installed."
+        echo -e "${RED}${BOLD}Error:${NC} Package ${GREEN}$package_name${NC} is not installed."
     fi
 }
 
@@ -134,10 +134,10 @@ function upgrade_package() {
             chmod +x "$INSTALLDIRECTORY/$package_name"
             echo -e "Package ${GREEN}$package_name${NC} upgraded successfully."
         else
-            echo -e "${RED}Error:${NC} Package ${GREEN}$package_name${NC} not found."
+            echo -e "${RED}${BOLD}Error:${NC} Package ${GREEN}$package_name${NC} not found."
         fi
     else
-        echo -e "${RED}Error:${NC} Package ${GREEN}$package_name${NC} is not installed."
+        echo -e "${RED}${BOLD}Error:${NC} Package ${GREEN}$package_name${NC} is not installed."
     fi
 }
 
@@ -156,7 +156,7 @@ function info_package() {
         
         rm "$INSTALLDIRECTORY/$package_name-info.txt"
     else
-        echo -e "${RED}Error:${NC} Package info for ${GREEN}$package_name${NC} not found."
+        echo -e "${RED}${BOLD}Error:${NC} Package info for ${GREEN}$package_name${NC} not found."
     fi
 }
 
@@ -229,7 +229,7 @@ function help_message() {
             echo "  Gets a list of packages from the repo, currently set to \"${REPO}\""
             ;;
         *)
-            echo -e "${RED}Error:${NC}  Not a help command"
+            echo -e "${RED}${BOLD}Error:${NC}  Not a help command"
             ;;
         esac
 }
@@ -244,7 +244,7 @@ function list_packages() {
             echo -e "${GREEN}${package_name}${NC} ${PURPLE}${package_description}${NC}"
         done < <(curl -s "$packages_file")
     else
-        echo -e "${RED}Error:${NC} Cannot connect to $packages_file. Check your internet connection or try again later."
+        echo -e "${RED}${BOLD}Error:${NC} Cannot connect to $packages_file. Check your internet connection or try again later."
     fi
 }
 
@@ -299,7 +299,7 @@ case "$1" in
                     echo "INSTALLDIRECTORY=\"$INSTALLDIRECTORY\"" > "$CFG"
                     echo "Package install directory set to $INSTALLDIRECTORY."
                 else
-                    echo -e "${RED}Error:${NC} Directory does not exist."
+                    echo -e "${RED}${BOLD}Error:${NC} Directory does not exist."
                 fi
                 ;;
             "repo")
@@ -307,7 +307,7 @@ case "$1" in
                 if wget --spider "$3" 2>/dev/null; then
                     echo "URL exists."
                 else
-                    echo -e "${RED}Error:${NC} URL does not exist."
+                    echo -e "${RED}${BOLD}Error:${NC} URL does not exist."
                     exit 1
                 fi
                 if wget --spider "$3/repo" 2>/dev/null; then
@@ -319,7 +319,7 @@ case "$1" in
                 if wget --spider "$3/repo/packages" 2>/dev/null; then
                     echo "Packages exist."
                 else
-                    echo -e "${RED}Error:${NC} Packages ($3/repo/packages) do not exist."
+                    echo -e "${RED}${BOLD}Error:${NC} Packages ($3/repo/packages) do not exist."
                     exit 1
                 fi
                 echo "Test complete. Adding URL to config..."
@@ -331,7 +331,7 @@ case "$1" in
                 help_message "config"
                 ;;
             *)
-                echo -e "${RED}Error:${NC} Invalid option"
+                echo -e "${RED}${BOLD}Error:${NC} Invalid option"
                 ;;
         esac
         ;;
@@ -369,7 +369,7 @@ case "$1" in
                 if wget --spider "https://parcel.pixspla.net/" 2>/dev/null; then
                     echo -e "${GREEN}Successfully connected to the Parcel servers.${NC}"
                 else
-                    echo -e "${RED}Error: Cannot connect to https://parcel.pixspla.net/${NC}"
+                    echo -e "${RED}${BOLD}Error: Cannot connect to https://parcel.pixspla.net/${NC}"
                 fi
                 ;;
             "test_connection_repo")
@@ -377,19 +377,19 @@ case "$1" in
                 if wget --spider "$REPO" 2>/dev/null; then
                     echo "URL exists."
                 else
-                    echo -e "${RED}Error:${NC} URL does not exist."
+                    echo -e "${RED}${BOLD}Error:${NC} URL does not exist."
                     exit 1
                 fi
                 if wget --spider "$REPO/repo" 2>/dev/null; then
                     echo "Repo exists."
                 else
-                    echo -e "${RED}Error:${NC} Repo ($REPO/repo) does not exist."
+                    echo -e "${RED}${BOLD}Error:${NC} Repo ($REPO/repo) does not exist."
                     exit 1
                 fi
                 if wget --spider "$REPO/repo/packages" 2>/dev/null; then
                     echo "Packages exist."
                 else
-                    echo -e "${RED}Error:${NC} Packages ($REPO/repo/packages) do not exist."
+                    echo -e "${RED}${BOLD}Error:${NC} Packages ($REPO/repo/packages) do not exist."
                     exit 1
                 fi
                 echo -e "${GREEN}Successfully connected to the repo.${NC}"
@@ -400,7 +400,7 @@ case "$1" in
                     sleep .5
                     remove_package test >/dev/null
                 else
-                    echo -e "${RED}Error:${NC} Could not write file."
+                    echo -e "${RED}${BOLD}Error:${NC} Could not write file."
                 fi
                 ;;
             "test_download")
@@ -411,7 +411,7 @@ case "$1" in
                         sleep .5
                         remove_package cls >/dev/null
                     else
-                        echo -e "${RED}Error:${NC} Could not download file."
+                        echo -e "${RED}${BOLD}Error:${NC} Could not download file."
                     fi
                 else
                     read -p "Do you have another package for testing? [y/n] " input
@@ -422,7 +422,7 @@ case "$1" in
                             sleep .5
                             remove_package $input >/dev/null
                         else
-                            echo -e "${RED}Error:${NC} Could not download file."
+                            echo -e "${RED}${BOLD}Error:${NC} Could not download file."
                         fi
                     else
                         echo "Operation cancelled."
@@ -447,7 +447,7 @@ case "$1" in
                 echo -e "${INVISIBLE} This text is INVISIBLE${NC}"
                 ;;
             *)
-                echo -e "${RED}Error:${NC} Invalid option: $1"
+                echo -e "${RED}${BOLD}Error:${NC} Invalid option: $1"
                 ;;
         esac
         ;;
@@ -455,7 +455,7 @@ case "$1" in
         help_message "main"
         ;;
     *)
-        echo -e "${RED}Error:${NC} Unknown command: $1"
+        echo -e "${RED}${BOLD}Error:${NC} Unknown command: $1"
         help_message "main"
         exit 1
         ;;
