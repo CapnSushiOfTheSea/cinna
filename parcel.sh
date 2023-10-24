@@ -12,6 +12,13 @@ YELLOW='\033[0;33m'
 BLUE='\033[0;34m'
 PURPLE='\033[0;35m'
 NC='\033[0m'
+BOLD='\033[1m'
+DIM='\033[2m'
+ITALIC='\033[3m'
+UNDERLINE='\033[4m'
+BLINKING='\033[5m'
+REVERSE='\033[7m'
+INVISIBLE='\033[8m'
 
 function read_config() {
     if [ -f "$CFG" ]; then
