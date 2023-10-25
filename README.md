@@ -8,7 +8,7 @@ parcel
 
 parcel is a package manager created by none other than I for simplifying the installation and management of custom programs.
 
-[\> download](https://parcel.pixspla.net/install_parcel.sh) [\> repo](https://parcel.pixspla.net/repo)
+[\> repo](https://parcel.pixspla.net/repo)
 
 \> installation
 ---------------
@@ -19,8 +19,9 @@ in your terminal, navigate to the directory where the 'install\_parcel.sh' file 
 
 run the following commands:
 
-    chmod +x install_parcel.sh
-    ./install_parcel.sh
+``` sh
+    $ sudo make install
+```
 
 after that, check if parcel is fully installed by running:
 
