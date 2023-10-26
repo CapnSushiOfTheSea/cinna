@@ -1,5 +1,18 @@
 #!/bin/bash
 
+dependencies=("wget" "curl")
+
+command_exists() {
+    command -v "$1" >/dev/null 2>&1
+}
+
+for dependency in "${dependencies[@]}"; do
+    if ! command_exists "$dependency"; then
+        echo -e "${RED}${BOLD}Error:${NC} '$dependency' is not installed. Please install it before running this script."
+        exit 1
+    fi
+done
+
 INSTALLDIRECTORY="$HOME/.program_files"
 CFG="$HOME/.parcel_config"
 REPO="https://parcel.pixspla.net"
