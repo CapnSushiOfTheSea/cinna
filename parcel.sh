@@ -517,7 +517,7 @@ case "$1" in
                 echo -e "${UNDERLINE} This text is UNDERLINED${NC}"
                 echo -e "${BLINKING} This text is BLINKING${NC}"
                 echo -e "${REVERSE} This text is REVERSED${NC}"
-                echo -e "${INVISIBLE} This text is INVISIBLE${NC}"
+                echo -e "${INVISIBLE} This text is INVISIBLE${NC} < This text is INVISIBLE"
                 ;;
             *)
                 echo -e "${RED}${BOLD}Error:${NC} Invalid option: $1"
