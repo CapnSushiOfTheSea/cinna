@@ -8,7 +8,7 @@ parcel
 
 parcel is a package manager created by none other than I for simplifying the installation and management of custom programs.
 
-[\> download](https://parcel.pixspla.net/install_parcel.sh) [\> repo](https://parcel.pixspla.net/repo)
+[\> repo](https://parcel.pixspla.net/repo)
 
 \> installation
 ---------------
@@ -19,67 +19,69 @@ in your terminal, navigate to the directory where the 'install\_parcel.sh' file 
 
 run the following commands:
 
-    chmod +x install_parcel.sh
-    ./install_parcel.sh
+``` sh
+    $ sudo make install
+```
 
 after that, check if parcel is fully installed by running:
-
-    parcel --version
-
+```sh
+    $ parcel --version
+```
 you can then use parcel by running:
-
-    parcel
-    # or
-    parcel --help
-
+```sh
+    $ parcel
+      or
+    $ parcel --help
+```
 \> usage
 --------
 this is outdated, so to see a list of commands, run:
-
-    parcel --help
-
+```sh
+    $ parcel --help
+```
 ### $ parcel get
 
 this is the main command for installing packages.
-
-    parcel get [name]
-
+```sh
+    $ parcel get [name]
+```
 ### $ parcel remove
 
 this command will let you remove any package you have installed.
-
+```sh
     parcel remove [name]
-
+```
 ### $ parcel upgrade
 
 this command will uninstall and reinstall any package, to get the latest version.
-
+```sh
     parcel upgrade [name]
-
+```
 ### $ parcel info
 
 this command will display the info of any package on the repo.
-
+```sh
     parcel info [name]
-
+```
 ### $ parcel update
 
 this command will simply update parcel.
-
+```sh
     parcel update
-
+```
 ### $ parcel --help, -h
 
 this command will display a list of commands and what they do.
-
-    parcel --help
-    # or
-    parcel -h
-
+```sh
+    $ parcel --help
+      or
+    $ parcel -h
+```
 ### $ parcel --version, -v
 
 this command will show you parcel's version.
-
-    parcel --version
-    # or
-    parcel -v
+```sh
+    $ parcel --version
+      or
+    $ parcel -v
+```
