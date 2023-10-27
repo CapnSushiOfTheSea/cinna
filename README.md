@@ -17,7 +17,7 @@ after downloading the repository via Git or GitHub:
 
 in your terminal, navigate to the directory where the files of the repository are located.
 
-run the following commands:
+run the following command:
 
 ``` sh
     $ sudo make install
