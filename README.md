@@ -13,9 +13,9 @@ parcel is a package manager created by none other than I for simplifying the ins
 \> installation
 ---------------
 
-after downloading the script:
+after downloading the repository via Git or GitHub:
 
-in your terminal, navigate to the directory where the 'install\_parcel.sh' file is located.
+in your terminal, navigate to the directory where the files of the repository are located.
 
 run the following commands:
 
