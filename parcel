@@ -428,6 +428,8 @@ case "$1" in
         sleep 1
         echo "  BoxelLogica - Being the best boyfriend ever"
         sleep 1
+        echo "  Niforru - First contributor; made makefile"
+        sleep 1
         echo "  CribonGarge - The \"Not So\" Mega Man"
         sleep 1
         echo "  StackOverflow - Being a programmer's best friend"
