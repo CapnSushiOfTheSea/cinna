@@ -73,34 +73,37 @@ if [[ ! ":$PATH:" == *":$INSTALLDIRECTORY:"* ]]; then
     echo -e "${RED}Warning:${NC} $INSTALLDIRECTORY is not in your PATH. Consider adding it to your PATH."
 fi
 
-function get_package() {
-    package_name="$1"
-    package_url="$REPO/repo/packages/$package_name"
+function get_packages() {
+    packages=("$@")
 
-    if [[ -f "$INSTALLDIRECTORY/$package_name" ]]; then
-        echo -e "Package ${GREEN}$package_name${NC} is already installed."
-    else
-        if wget --spider "$package_url/$package_name" 2>/dev/null; then
-            mkdir -p "$INSTALLDIRECTORY"
+    for package_name in "${packages[@]}"; do
+        package_url="$REPO/repo/packages/$package_name"
 
-            echo -e "Installing package ${GREEN}$package_name${NC}"
-            echo -e "Getting ${GREEN}'$package_url/$package_name'${NC}"
-            wget "$package_url/$package_name" -P "$INSTALLDIRECTORY" 2> /dev/null
-
-            if wget --spider "$package_url/$package_name-files.zip" 2>/dev/null; then
-                echo -e "Getting ${GREEN}'$package_url/$package_name-files.zip'${NC}"
-                wget "$package_url/$package_name-files.zip" -P "$INSTALLDIRECTORY" 2> /dev/null
-                unzip "$INSTALLDIRECTORY/$package_name-files.zip" -d "$INSTALLDIRECTORY/$package_name-files" > /dev/null
-                echo "Cleaning up..."
-                rm "$INSTALLDIRECTORY/$package_name-files.zip"
-            fi
-
-            chmod +x "$INSTALLDIRECTORY/$package_name"
-            echo -e "Package ${GREEN}$package_name${NC} installed successfully."
+        if [[ -f "$INSTALLDIRECTORY/$package_name" ]]; then
+            echo -e "Package ${GREEN}$package_name${NC} is already installed."
         else
-            echo -e "${RED}${BOLD}Error:${NC} Package ${GREEN}$package_name${NC} not found."
+            if wget --spider "$package_url/$package_name" 2>/dev/null; then
+                mkdir -p "$INSTALLDIRECTORY"
+
+                echo -e "Installing package ${GREEN}$package_name${NC}"
+                echo -e "Getting ${GREEN}'$package_url/$package_name'${NC}"
+                wget "$package_url/$package_name" -P "$INSTALLDIRECTORY" 2> /dev/null
+
+                if wget --spider "$package_url/$package_name-files.zip" 2>/dev/null; then
+                    echo -e "Getting ${GREEN}'$package_url/$package_name-files.zip'${NC}"
+                    wget "$package_url/$package_name-files.zip" -P "$INSTALLDIRECTORY" 2> /dev/null
+                    unzip "$INSTALLDIRECTORY/$package_name-files.zip" -d "$INSTALLDIRECTORY/$package_name-files" > /dev/null
+                    echo "Cleaning up..."
+                    rm "$INSTALLDIRECTORY/$package_name-files.zip"
+                fi
+
+                chmod +x "$INSTALLDIRECTORY/$package_name"
+                echo -e "Package ${GREEN}$package_name${NC} installed successfully."
+            else
+                echo -e "${RED}${BOLD}Error:${NC} Package ${GREEN}$package_name${NC} not found."
+            fi
         fi
-    fi
+    done
 }
 
 function remove_package() {
@@ -268,7 +271,8 @@ case "$1" in
         ;;
     "get")
         check_for_updates
-        get_package "$2"
+        shift
+        get_packages "$@"
         ;;
     "remove")
         check_for_updates
