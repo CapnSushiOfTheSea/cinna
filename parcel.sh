@@ -400,6 +400,10 @@ case "$1" in
                 echo "REPO=\"$REPO\"" > "$CFG"
                 echo "Repo URL set to $REPO."
                 ;;
+            "read")
+                echo "Repo: $REPO"
+                echo "Install Directory: $INSTALLDIRECTORY"
+                ;;
             "--help" | "-h" | "")
                 help_message "config"
                 ;;
