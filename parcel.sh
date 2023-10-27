@@ -22,8 +22,8 @@ done
 INSTALLDIRECTORY="$HOME/.program_files"
 CFG="$HOME/.parcel_config"
 REPO="https://parcel.pixspla.net"
-VERSION="1.3"
-VERSIONTITLE="sleepyhead"
+VERSION="1.4"
+VERSIONTITLE="borderline"
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
