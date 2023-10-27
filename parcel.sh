@@ -1,4 +1,10 @@
 #!/bin/bash
+#                           _ 
+#  _ __   __ _ _ __ ___ ___| |
+# | '_ \ / _` | '__/ __/ _ \ |
+# | |_) | (_| | | | (_|  __/ |
+# | .__/ \__,_|_|  \___\___|_|
+# |_|  "That Weird Package Manager"
 
 dependencies=("wget" "curl")
 
@@ -181,7 +187,12 @@ function info_package() {
 function help_message() {
     case $1 in
         "main")
-            echo -e "${GREEN}Parcel${NC}: The stupidest package manager known to mankind"
+            echo "                          _ "
+            echo " _ __   __ _ _ __ ___ ___| |"
+            echo "| '_ \ / _\` | '__/ __/ _ \ |"
+            echo "| |_) | (_| | | | (_|  __/ |"
+            echo "| .__/ \__,_|_|  \___\___|_|"
+            echo "|_|  \"That Weird Package Manager\"   "
             echo ""
             echo -e "${PURPLE}Commands${NC}"
             echo -e "  ${BLUE}get${NC} ${YELLOW}<package name>${NC}     - Install a package."
@@ -199,7 +210,12 @@ function help_message() {
             echo -e "  ${BLUE}--version, -v${NC}          - Show the version of Parcel."
             ;;
         "config")
-            echo -e "${GREEN}Parcel${NC}: The stupidest package manager known to mankind"
+            echo "                          _ "
+            echo " _ __   __ _ _ __ ___ ___| |"
+            echo "| '_ \ / _\` | '__/ __/ _ \ |"
+            echo "| |_) | (_| | | | (_|  __/ |"
+            echo "| .__/ \__,_|_|  \___\___|_|"
+            echo "|_|  \"That Weird Package Manager\"   "
             echo ""
             echo -e "${PURPLE}Config Options${NC}"
             echo -e "  ${BLUE}dir${NC} ${YELLOW}<package name>${NC}     - Set the package install directory."
@@ -209,39 +225,69 @@ function help_message() {
             echo -e "  ${BLUE}--help, -h${NC}             - Show this help message."
             ;;
         "get")
-            echo -e "${GREEN}Parcel${NC}: The stupidest package manager known to mankind"
+            echo "                          _ "
+            echo " _ __   __ _ _ __ ___ ___| |"
+            echo "| '_ \ / _\` | '__/ __/ _ \ |"
+            echo "| |_) | (_| | | | (_|  __/ |"
+            echo "| .__/ \__,_|_|  \___\___|_|"
+            echo "|_|  \"That Weird Package Manager\"   "
             echo ""
             echo -e "${PURPLE}parcel${NC} ${BLUE}get${NC} ${YELLOW}<package name>${NC}"
             echo "  Installs a package from the repo, currently set to \"${REPO}\"."
             ;;
         "remove")
-            echo -e "${GREEN}Parcel${NC}: The stupidest package manager known to mankind"
+            echo "                          _ "
+            echo " _ __   __ _ _ __ ___ ___| |"
+            echo "| '_ \ / _\` | '__/ __/ _ \ |"
+            echo "| |_) | (_| | | | (_|  __/ |"
+            echo "| .__/ \__,_|_|  \___\___|_|"
+            echo "|_|  \"That Weird Package Manager\"   "
             echo ""
             echo -e "${PURPLE}parcel${NC} ${BLUE}remove${NC} ${YELLOW}<package name>${NC}"
             echo "  Removes an installed package from your computer."
             ;;
         "upgrade")
-            echo -e "${GREEN}Parcel${NC}: The stupidest package manager known to mankind"
+            echo "                          _ "
+            echo " _ __   __ _ _ __ ___ ___| |"
+            echo "| '_ \ / _\` | '__/ __/ _ \ |"
+            echo "| |_) | (_| | | | (_|  __/ |"
+            echo "| .__/ \__,_|_|  \___\___|_|"
+            echo "|_|  \"That Weird Package Manager\"   "
             echo ""
             echo -e "${PURPLE}parcel${NC} ${BLUE}upgrade${NC} ${YELLOW}<package name>${NC}"
             echo "  Reinstalls a package, to get the latest version."
             echo "  Not to be confused with \"parcel update\""
             ;;
         "update")
-            echo -e "${GREEN}Parcel${NC}: The stupidest package manager known to mankind"
+            echo "                          _ "
+            echo " _ __   __ _ _ __ ___ ___| |"
+            echo "| '_ \ / _\` | '__/ __/ _ \ |"
+            echo "| |_) | (_| | | | (_|  __/ |"
+            echo "| .__/ \__,_|_|  \___\___|_|"
+            echo "|_|  \"That Weird Package Manager\"   "
             echo ""
             echo -e "${PURPLE}parcel${NC} ${BLUE}update${NC} "
             echo "  Completely reinstalls Parcel, to get the latest version."
             echo "  Not to be confused with \"parcel upgrade\""
             ;;
         "info")
-            echo -e "${GREEN}Parcel${NC}: The stupidest package manager known to mankind"
+            echo "                          _ "
+            echo " _ __   __ _ _ __ ___ ___| |"
+            echo "| '_ \ / _\` | '__/ __/ _ \ |"
+            echo "| |_) | (_| | | | (_|  __/ |"
+            echo "| .__/ \__,_|_|  \___\___|_|"
+            echo "|_|  \"That Weird Package Manager\"   "
             echo ""
             echo -e "${PURPLE}parcel${NC} ${BLUE}info${NC} ${YELLOW}<package name>${NC}"
             echo "  Gets package info from the repo, currently set to \"${REPO}\""
             ;;
         "list")
-            echo -e "${GREEN}Parcel${NC}: The stupidest package manager known to mankind"
+            echo "                          _ "
+            echo " _ __   __ _ _ __ ___ ___| |"
+            echo "| '_ \ / _\` | '__/ __/ _ \ |"
+            echo "| |_) | (_| | | | (_|  __/ |"
+            echo "| .__/ \__,_|_|  \___\___|_|"
+            echo "|_|  \"That Weird Package Manager\"   "
             echo ""
             echo -e "${PURPLE}parcel${NC} ${BLUE}list${NC}"
             echo "  Gets a list of packages from the repo, currently set to \"${REPO}\""
@@ -308,6 +354,13 @@ case "$1" in
         fi
         ;;
     "--version" | "-v")
+        echo "                          _ "
+        echo " _ __   __ _ _ __ ___ ___| |"
+        echo "| '_ \ / _\` | '__/ __/ _ \ |"
+        echo "| |_) | (_| | | | (_|  __/ |"
+        echo "| .__/ \__,_|_|  \___\___|_|"
+        echo "|_|  \"That Weird Package Manager\"   "
+        echo ""
         echo -e "${GREEN}Parcel${NC} ${PURPLE}v$VERSION${NC} (codename '$VERSIONTITLE')"
         echo -e "Created by ${BLUE}NoodleDX${NC}"
         ;;
@@ -361,7 +414,7 @@ case "$1" in
         echo "| '_ \ / _\` | '__/ __/ _ \ |"
         echo "| |_) | (_| | | | (_|  __/ |"
         echo "| .__/ \__,_|_|  \___\___|_|"
-        echo "|_|  \"The Stupidest Package Manager Ever\"   "
+        echo "|_|  \"That Weird Package Manager\"   "
         echo ""
         sleep 1
         echo "Credits"
