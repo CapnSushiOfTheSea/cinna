@@ -106,18 +106,20 @@ function get_packages() {
     done
 }
 
-function remove_package() {
-    package_name="$1"
+function remove_packages() {
+    packages=("$@")
 
-    if [[ -f "$INSTALLDIRECTORY/$package_name" ]]; then
-        rm -rf "$INSTALLDIRECTORY/$package_name"
-        if [[ -d "$INSTALLDIRECTORY/$package_name-files" ]]; then
-            rm -r "$INSTALLDIRECTORY/$package_name-files"
+    for package_name in "${packages[@]}"; do
+        if [[ -f "$INSTALLDIRECTORY/$package_name" ]]; then
+            rm -rf "$INSTALLDIRECTORY/$package_name"
+            if [[ -d "$INSTALLDIRECTORY/$package_name-files" ]]; then
+                rm -r "$INSTALLDIRECTORY/$package_name-files"
+            fi
+            echo -e "Package ${GREEN}$package_name${NC} removed."
+        else
+            echo -e "${RED}${BOLD}Error:${NC} Package ${GREEN}$package_name${NC} is not installed."
         fi
-        echo -e "Package ${GREEN}$package_name${NC} removed."
-    else
-        echo -e "${RED}${BOLD}Error:${NC} Package ${GREEN}$package_name${NC} is not installed."
-    fi
+    done
 }
 
 function upgrade_package() {
@@ -276,7 +278,8 @@ case "$1" in
         ;;
     "remove")
         check_for_updates
-        remove_package "$2"
+        shift
+        remove_packages "$@"
         ;;
     "upgrade")
         check_for_updates
