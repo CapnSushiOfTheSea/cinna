@@ -1,4 +1,4 @@
-  parcel is fun to say 
+  I need to rename this because ap**PARENTLY** parcel is TAKEN by [this](https://github.com/parcel-bundler/parcel) (check it out its pretty nice actually) grrr
 
 parcel
 ======
