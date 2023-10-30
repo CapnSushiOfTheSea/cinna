@@ -52,8 +52,8 @@ function check_for_updates() {
             echo -e "${YELLOW}A new version of Cinna is available: $latest_version.${NC}"
             echo -e "You can update Cinna using 'cinna update'."
         elif [[ "$latest_version" < "$VERSION" ]]; then
-            echo -e "${YELLOW}Woah Development Version !! You are Using $VERSION, and the latest is $latest_version.${NC}"
-            echo -e "You can update Cinna using 'cinna update' if you want lmao."
+            echo -e "${YELLOW}You're on a development version! You're using $VERSION (latest: $latest_version)${NC}"
+            echo -e "Warning: Running 'cinna update' will DOWNGRADE your version of Cinna!"
         fi
     else
         echo -e "${RED}${BOLD}Error: Cannot connect to the Cinna server. Cinna needs an internet connection to run. Try again later."
