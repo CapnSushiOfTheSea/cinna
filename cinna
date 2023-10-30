@@ -88,30 +88,44 @@ function get_packages() {
     packages=("$@")
 
     for package_name in "${packages[@]}"; do
-        package_url="$REPO/repo/packages/$package_name"
+        if [[ $package_name == *.clist ]]; then
+            if [[ -f "$package_name" ]]; then
+                while IFS= read -r line; do
+                    line=$(echo "$line" | xargs)
 
-        if [[ -f "$INSTALLDIRECTORY/$package_name" ]]; then
-            echo -e "Package ${GREEN}$package_name${NC} is already installed."
-        else
-            if wget --spider "$package_url/$package_name" 2>/dev/null; then
-                mkdir -p "$INSTALLDIRECTORY"
-
-                echo -e "Installing package ${GREEN}$package_name${NC}"
-                echo -e "Getting ${GREEN}'$package_url/$package_name'${NC}"
-                wget "$package_url/$package_name" -P "$INSTALLDIRECTORY" 2> /dev/null
-
-                if wget --spider "$package_url/$package_name-files.zip" 2>/dev/null; then
-                    echo -e "Getting ${GREEN}'$package_url/$package_name-files.zip'${NC}"
-                    wget "$package_url/$package_name-files.zip" -P "$INSTALLDIRECTORY" 2> /dev/null
-                    unzip "$INSTALLDIRECTORY/$package_name-files.zip" -d "$INSTALLDIRECTORY/$package_name-files" > /dev/null
-                    echo "Cleaning up..."
-                    rm "$INSTALLDIRECTORY/$package_name-files.zip"
-                fi
-
-                chmod +x "$INSTALLDIRECTORY/$package_name"
-                echo -e "Package ${GREEN}$package_name${NC} installed successfully."
+                    if [[ -n $line && ! $line =~ ^# ]]; then
+                        get_packages "$line"
+                    fi
+                done < "$package_name"
             else
-                echo -e "${RED}${BOLD}Error:${NC} Package ${GREEN}$package_name${NC} not found."
+                echo -e "${RED}${BOLD}Error:${NC} File $package_name not found."
+            fi
+        else
+            package_url="$REPO/repo/packages/$package_name"
+
+            if [[ -f "$INSTALLDIRECTORY/$package_name" ]]; then
+                echo -e "Package ${GREEN}$package_name${NC} is already installed."
+            else
+                if wget --spider "$package_url/$package_name" 2>/dev/null; then
+                    mkdir -p "$INSTALLDIRECTORY"
+
+                    echo -e "Installing package ${GREEN}$package_name${NC}"
+                    echo -e "Getting ${GREEN}'$package_url/$package_name'${NC}"
+                    wget "$package_url/$package_name" -P "$INSTALLDIRECTORY" 2> /dev/null
+
+                    if wget --spider "$package_url/$package_name-files.zip" 2>/dev/null; then
+                        echo -e "Getting ${GREEN}'$package_url/$package_name-files.zip'${NC}"
+                        wget "$package_url/$package_name-files.zip" -P "$INSTALLDIRECTORY" 2> /dev/null
+                        unzip "$INSTALLDIRECTORY/$package_name-files.zip" -d "$INSTALLDIRECTORY/$package_name-files" > /dev/null
+                        echo "Cleaning up..."
+                        rm "$INSTALLDIRECTORY/$package_name-files.zip"
+                    fi
+
+                    chmod +x "$INSTALLDIRECTORY/$package_name"
+                    echo -e "Package ${GREEN}$package_name${NC} installed successfully."
+                else
+                    echo -e "${RED}${BOLD}Error:${NC} Package ${GREEN}$package_name${NC} not found."
+                fi
             fi
         fi
     done
