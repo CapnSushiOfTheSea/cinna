@@ -579,7 +579,7 @@ case "$1" in
                 fi
                 ;;
             *)
-                echo -e "${RED}${BOLD}Error:${NC} Invalid option: $1"
+                echo -e "${RED}${BOLD}Error:${NC} Invalid option: $2"
                 ;;
         esac
         ;;
