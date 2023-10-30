@@ -566,6 +566,18 @@ case "$1" in
                 echo -e "${REVERSE} This text is REVERSED${NC}"
                 echo -e "${INVISIBLE} This text is INVISIBLE${NC} < This text is INVISIBLE"
                 ;;
+            "show_variables")
+                echo "REPO: $REPO"
+                echo "INSTALLDIRECTORY: $INSTALLDIRECTORY"
+                echo "SCRIPT LOCATION: $0"
+                echo "CFG: $CFG"
+                echo "VERSION: $VERSION"
+                echo "VERSIONTITLE: $VERSIONTITLE"
+                if wget --spider "https://cinna.pixspla.net/" 2>/dev/null; then
+                    latest_version=$(curl -s "https://cinna.pixspla.net/version")
+                    echo "LATEST VERSION: $latest_version"
+                fi
+                ;;
             *)
                 echo -e "${RED}${BOLD}Error:${NC} Invalid option: $1"
                 ;;
