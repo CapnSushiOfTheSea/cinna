@@ -549,8 +549,8 @@ case "$1" in
                     fi
                 fi
                 ;;
-            "color_test")
-                echo -e "Color Test"
+            "colour_test")
+                echo -e "Colour Test"
                 echo -e "============="
                 echo -e "${RED} This text is RED${NC}"
                 echo -e "${GREEN} This text is GREEN${NC}"
