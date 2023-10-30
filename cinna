@@ -64,10 +64,15 @@ function check_for_updates() {
 function update_cinna() {
     if wget --spider "https://cinna.pixspla.net/cinna" 2>/dev/null; then
         echo -e "Updating Cinna..."
-        rm -rf "$INSTALLDIRECTORY/cinna"
-        wget "https://cinna.pixspla.net/cinna" -P "$INSTALLDIRECTORY" 2> /dev/null
-        chmod +x "$INSTALLDIRECTORY/cinna"
-        echo -e "${GREEN}Cinna updated successfully.${NC}"
+        sudo mv "/usr/bin/cinna" "/usr/bin/cinna_bak"
+        if sudo wget "https://cinna.pixspla.net/cinna" -P "/usr/bin/" 2> /dev/null; then
+            sudo rm -rf "/usr/bin/cinna_bak"
+            sudo chmod +x "/usr/bin/cinna"
+            echo -e "${GREEN}Cinna updated successfully.${NC}"
+        else
+            sudo mv "/usr/bin/cinna_bak" "/usr/bin/cinna"
+            echo -e "${RED}${BOLD}Error: Could not download Cinna. Try again later.${NC}"
+        fi
     else
         echo -e "${RED}${BOLD}Error:${NC} Cannot connect to https://cinna.pixspla.net/ to download Cinna. Try again later."
     fi
