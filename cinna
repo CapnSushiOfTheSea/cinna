@@ -562,7 +562,6 @@ case "$1" in
         ;;
     *)
         echo -e "${RED}${BOLD}Error:${NC} Unknown command: $1"
-        help_message "main"
         exit 1
         ;;
 esac
