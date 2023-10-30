@@ -1,10 +1,10 @@
 #!/bin/bash
-#                           _ 
-#  _ __   __ _ _ __ ___ ___| |
-# | '_ \ / _` | '__/ __/ _ \ |
-# | |_) | (_| | | | (_|  __/ |
-# | .__/ \__,_|_|  \___\___|_|
-# |_|  "That Weird Package Manager"
+#       _                   
+#   ___(_)_ __  _ __   __ _ 
+#  / __| | '_ \| '_ \ / _` |
+# | (__| | | | | | | | (_| |
+#  \___|_|_| |_|_| |_|\__,_|
+# "That Weird Package Manager"
 
 dependencies=("wget" "curl")
 
@@ -20,8 +20,8 @@ for dependency in "${dependencies[@]}"; do
 done
 
 INSTALLDIRECTORY="$HOME/.program_files"
-CFG="$HOME/.parcel_config"
-REPO="https://parcel.pixspla.net"
+CFG="$HOME/.cinna_config"
+REPO="https://cinna.pixspla.net"
 VERSION="1.4"
 VERSIONTITLE="borderline"
 
@@ -46,30 +46,30 @@ function read_config() {
 }
 
 function check_for_updates() {
-    if wget --spider "https://parcel.pixspla.net/" 2>/dev/null; then
-        latest_version=$(curl -s "https://parcel.pixspla.net/version")
+    if wget --spider "https://cinna.pixspla.net/" 2>/dev/null; then
+        latest_version=$(curl -s "https://cinna.pixspla.net/version")
         if [[ "$latest_version" > "$VERSION" ]]; then
-            echo -e "${YELLOW}A new version of Parcel is available: $latest_version.${NC}"
-            echo -e "You can update Parcel using 'parcel update'."
+            echo -e "${YELLOW}A new version of Cinna is available: $latest_version.${NC}"
+            echo -e "You can update Cinna using 'cinna update'."
         elif [[ "$latest_version" < "$VERSION" ]]; then
             echo -e "${YELLOW}Woah Development Version !! You are Using $VERSION, and the latest is $latest_version.${NC}"
-            echo -e "You can update Parcel using 'parcel update' if you want lmao."
+            echo -e "You can update Cinna using 'cinna update' if you want lmao."
         fi
     else
-        echo -e "${RED}${BOLD}Error: Cannot connect to the Parcel server. Parcel needs an internet connection to run. Try again later."
+        echo -e "${RED}${BOLD}Error: Cannot connect to the Cinna server. Cinna needs an internet connection to run. Try again later."
         exit 1
     fi
 }
 
-function update_parcel() {
-    if wget --spider "https://parcel.pixspla.net/parcel" 2>/dev/null; then
-        echo -e "Updating Parcel..."
-        rm -rf "$INSTALLDIRECTORY/parcel"
-        wget "https://parcel.pixspla.net/parcel" -P "$INSTALLDIRECTORY" 2> /dev/null
-        chmod +x "$INSTALLDIRECTORY/parcel"
-        echo -e "${GREEN}Parcel updated successfully.${NC}"
+function update_cinna() {
+    if wget --spider "https://cinna.pixspla.net/cinna" 2>/dev/null; then
+        echo -e "Updating Cinna..."
+        rm -rf "$INSTALLDIRECTORY/cinna"
+        wget "https://cinna.pixspla.net/cinna" -P "$INSTALLDIRECTORY" 2> /dev/null
+        chmod +x "$INSTALLDIRECTORY/cinna"
+        echo -e "${GREEN}Cinna updated successfully.${NC}"
     else
-        echo -e "${RED}${BOLD}Error:${NC} Cannot connect to https://parcel.pixspla.net/ to download Parcel. Try again later."
+        echo -e "${RED}${BOLD}Error:${NC} Cannot connect to https://cinna.pixspla.net/ to download Cinna. Try again later."
     fi
 }
 
@@ -187,35 +187,35 @@ function info_package() {
 function help_message() {
     case $1 in
         "main")
-            echo -e "${RED}                          _ "
-            echo -e "${GREEN} _ __   __ _ _ __ ___ ___| |"
-            echo -e "${YELLOW}| '_ \ / _\` | '__/ __/ _ \ |"
-            echo -e "${BLUE}| |_) | (_| | | | (_|  __/ |"
-            echo -e "${PURPLE}| .__/ \__,_|_|  \___\___|_|"
-            echo -e "${RED}|_|${NC}  \"${GREEN}That Weird Package Manager${NC}\"  "
+            echo -e "${GREEN}       _                   ${NC}"
+            echo -e "${GREEN}   ___(_)_ __  _ __   __ _ ${NC}"
+            echo -e "${YELLOW}  / __| | '_ \| '_ \ / _\` |${NC}"
+            echo -e "${BLUE} | (__| | | | | | | | (_| |${NC}"
+            echo -e "${PURPLE}  \___|_|_| |_|_| |_|\__,_|${NC}"
+            echo -e "${RED} \"That Weird Package Manager\"${NC}"
             echo ""
             echo -e "${PURPLE}Commands${NC}"
             echo -e "  ${BLUE}get${NC} ${YELLOW}<package name>${NC}     - Install a package."
             echo -e "  ${BLUE}remove${NC} ${YELLOW}<package name>${NC}  - Remove a package."
             echo -e "  ${BLUE}upgrade${NC} ${YELLOW}<package name>${NC} - Upgrade a package."
             echo -e "  ${BLUE}info${NC} ${YELLOW}<package name>${NC}    - Get package information."
-            echo -e "  ${BLUE}update${NC}                 - Update Parcel."
-            echo -e "  ${BLUE}config ${YELLOW}<option>${NC}        - Configure Parcel."
-            echo -e "    ${YELLOW}(Use "parcel config -h" for it's help command.)${NC}"
-            echo -e "  ${BLUE}credits${NC}                - Show Parcel credits."
+            echo -e "  ${BLUE}update${NC}                 - Update Cinna."
+            echo -e "  ${BLUE}config ${YELLOW}<option>${NC}        - Configure Cinna."
+            echo -e "    ${YELLOW}(Use "cinna config -h" for it's help command.)${NC}"
+            echo -e "  ${BLUE}credits${NC}                - Show Cinna credits."
             echo -e "  ${BLUE}list${NC}                   - Get a list of packages."
             echo ""
             echo -e "${PURPLE}Arguments${NC}"
             echo -e "  ${BLUE}--help, -h${NC}             - Show this help message."
-            echo -e "  ${BLUE}--version, -v${NC}          - Show the version of Parcel."
+            echo -e "  ${BLUE}--version, -v${NC}          - Show the version of Cinna."
             ;;
         "config")
-            echo -e "${RED}                          _ "
-            echo -e "${GREEN} _ __   __ _ _ __ ___ ___| |"
-            echo -e "${YELLOW}| '_ \ / _\` | '__/ __/ _ \ |"
-            echo -e "${BLUE}| |_) | (_| | | | (_|  __/ |"
-            echo -e "${PURPLE}| .__/ \__,_|_|  \___\___|_|"
-            echo -e "${RED}|_|${NC}  \"${GREEN}That Weird Package Manager${NC}\"  "
+            echo -e "${GREEN}       _                   ${NC}"
+            echo -e "${GREEN}   ___(_)_ __  _ __   __ _ ${NC}"
+            echo -e "${YELLOW}  / __| | '_ \| '_ \ / _\` |${NC}"
+            echo -e "${BLUE} | (__| | | | | | | | (_| |${NC}"
+            echo -e "${PURPLE}  \___|_|_| |_|_| |_|\__,_|${NC}"
+            echo -e "${RED} \"That Weird Package Manager\"${NC}"
             echo ""
             echo -e "${PURPLE}Config Options${NC}"
             echo -e "  ${BLUE}dir${NC} ${YELLOW}<package name>${NC}     - Set the package install directory."
@@ -225,71 +225,71 @@ function help_message() {
             echo -e "  ${BLUE}--help, -h${NC}             - Show this help message."
             ;;
         "get")
-            echo -e "${RED}                          _ "
-            echo -e "${GREEN} _ __   __ _ _ __ ___ ___| |"
-            echo -e "${YELLOW}| '_ \ / _\` | '__/ __/ _ \ |"
-            echo -e "${BLUE}| |_) | (_| | | | (_|  __/ |"
-            echo -e "${PURPLE}| .__/ \__,_|_|  \___\___|_|"
-            echo -e "${RED}|_|${NC}  \"${GREEN}That Weird Package Manager${NC}\"  "
+            echo -e "${GREEN}       _                   ${NC}"
+            echo -e "${GREEN}   ___(_)_ __  _ __   __ _ ${NC}"
+            echo -e "${YELLOW}  / __| | '_ \| '_ \ / _\` |${NC}"
+            echo -e "${BLUE} | (__| | | | | | | | (_| |${NC}"
+            echo -e "${PURPLE}  \___|_|_| |_|_| |_|\__,_|${NC}"
+            echo -e "${RED} \"That Weird Package Manager\"${NC}"
             echo ""
-            echo -e "${PURPLE}parcel${NC} ${BLUE}get${NC} ${YELLOW}<package name>${NC}"
+            echo -e "${PURPLE}cinna${NC} ${BLUE}get${NC} ${YELLOW}<package name>${NC}"
             echo "  Installs a package from the repo, currently set to \"${REPO}\"."
             ;;
         "remove")
-            echo -e "${RED}                          _ "
-            echo -e "${GREEN} _ __   __ _ _ __ ___ ___| |"
-            echo -e "${YELLOW}| '_ \ / _\` | '__/ __/ _ \ |"
-            echo -e "${BLUE}| |_) | (_| | | | (_|  __/ |"
-            echo -e "${PURPLE}| .__/ \__,_|_|  \___\___|_|"
-            echo -e "${RED}|_|${NC}  \"${GREEN}That Weird Package Manager${NC}\"  "
+            echo -e "${GREEN}       _                   ${NC}"
+            echo -e "${GREEN}   ___(_)_ __  _ __   __ _ ${NC}"
+            echo -e "${YELLOW}  / __| | '_ \| '_ \ / _\` |${NC}"
+            echo -e "${BLUE} | (__| | | | | | | | (_| |${NC}"
+            echo -e "${PURPLE}  \___|_|_| |_|_| |_|\__,_|${NC}"
+            echo -e "${RED} \"That Weird Package Manager\"${NC}"
             echo ""
-            echo -e "${PURPLE}parcel${NC} ${BLUE}remove${NC} ${YELLOW}<package name>${NC}"
+            echo -e "${PURPLE}cinna${NC} ${BLUE}remove${NC} ${YELLOW}<package name>${NC}"
             echo "  Removes an installed package from your computer."
             ;;
         "upgrade")
-            echo -e "${RED}                          _ "
-            echo -e "${GREEN} _ __   __ _ _ __ ___ ___| |"
-            echo -e "${YELLOW}| '_ \ / _\` | '__/ __/ _ \ |"
-            echo -e "${BLUE}| |_) | (_| | | | (_|  __/ |"
-            echo -e "${PURPLE}| .__/ \__,_|_|  \___\___|_|"
-            echo -e "${RED}|_|${NC}  \"${GREEN}That Weird Package Manager${NC}\"  "
+            echo -e "${GREEN}       _                   ${NC}"
+            echo -e "${GREEN}   ___(_)_ __  _ __   __ _ ${NC}"
+            echo -e "${YELLOW}  / __| | '_ \| '_ \ / _\` |${NC}"
+            echo -e "${BLUE} | (__| | | | | | | | (_| |${NC}"
+            echo -e "${PURPLE}  \___|_|_| |_|_| |_|\__,_|${NC}"
+            echo -e "${RED} \"That Weird Package Manager\"${NC}"
             echo ""
-            echo -e "${PURPLE}parcel${NC} ${BLUE}upgrade${NC} ${YELLOW}<package name>${NC}"
+            echo -e "${PURPLE}cinna${NC} ${BLUE}upgrade${NC} ${YELLOW}<package name>${NC}"
             echo "  Reinstalls a package, to get the latest version."
-            echo "  Not to be confused with \"parcel update\""
+            echo "  Not to be confused with \"cinna update\""
             ;;
         "update")
-            echo -e "${RED}                          _ "
-            echo -e "${GREEN} _ __   __ _ _ __ ___ ___| |"
-            echo -e "${YELLOW}| '_ \ / _\` | '__/ __/ _ \ |"
-            echo -e "${BLUE}| |_) | (_| | | | (_|  __/ |"
-            echo -e "${PURPLE}| .__/ \__,_|_|  \___\___|_|"
-            echo -e "${RED}|_|${NC}  \"${GREEN}That Weird Package Manager${NC}\"  "
+            echo -e "${GREEN}       _                   ${NC}"
+            echo -e "${GREEN}   ___(_)_ __  _ __   __ _ ${NC}"
+            echo -e "${YELLOW}  / __| | '_ \| '_ \ / _\` |${NC}"
+            echo -e "${BLUE} | (__| | | | | | | | (_| |${NC}"
+            echo -e "${PURPLE}  \___|_|_| |_|_| |_|\__,_|${NC}"
+            echo -e "${RED} \"That Weird Package Manager\"${NC}"
             echo ""
-            echo -e "${PURPLE}parcel${NC} ${BLUE}update${NC} "
-            echo "  Completely reinstalls Parcel, to get the latest version."
-            echo "  Not to be confused with \"parcel upgrade\""
+            echo -e "${PURPLE}cinna${NC} ${BLUE}update${NC} "
+            echo "  Completely reinstalls Cinna, to get the latest version."
+            echo "  Not to be confused with \"cinna upgrade\""
             ;;
         "info")
-            echo -e "${RED}                          _ "
-            echo -e "${GREEN} _ __   __ _ _ __ ___ ___| |"
-            echo -e "${YELLOW}| '_ \ / _\` | '__/ __/ _ \ |"
-            echo -e "${BLUE}| |_) | (_| | | | (_|  __/ |"
-            echo -e "${PURPLE}| .__/ \__,_|_|  \___\___|_|"
-            echo -e "${RED}|_|${NC}  \"${GREEN}That Weird Package Manager${NC}\"   "
+            echo -e "${GREEN}       _                   ${NC}"
+            echo -e "${GREEN}   ___(_)_ __  _ __   __ _ ${NC}"
+            echo -e "${YELLOW}  / __| | '_ \| '_ \ / _\` |${NC}"
+            echo -e "${BLUE} | (__| | | | | | | | (_| |${NC}"
+            echo -e "${PURPLE}  \___|_|_| |_|_| |_|\__,_|${NC}"
+            echo -e "${RED} \"That Weird Package Manager\"${NC}"
             echo ""
-            echo -e "${PURPLE}parcel${NC} ${BLUE}info${NC} ${YELLOW}<package name>${NC}"
+            echo -e "${PURPLE}cinna${NC} ${BLUE}info${NC} ${YELLOW}<package name>${NC}"
             echo "  Gets package info from the repo, currently set to \"${REPO}\""
             ;;
         "list")
-            echo -e "${RED}                          _ "
-            echo -e "${GREEN} _ __   __ _ _ __ ___ ___| |"
-            echo -e "${YELLOW}| '_ \ / _\` | '__/ __/ _ \ |"
-            echo -e "${BLUE}| |_) | (_| | | | (_|  __/ |"
-            echo -e "${PURPLE}| .__/ \__,_|_|  \___\___|_|"
-            echo -e "${RED}|_|${NC}  \"${GREEN}That Weird Package Manager${NC}\"   "
+            echo -e "${GREEN}       _                   ${NC}"
+            echo -e "${GREEN}   ___(_)_ __  _ __   __ _ ${NC}"
+            echo -e "${YELLOW}  / __| | '_ \| '_ \ / _\` |${NC}"
+            echo -e "${BLUE} | (__| | | | | | | | (_| |${NC}"
+            echo -e "${PURPLE}  \___|_|_| |_|_| |_|\__,_|${NC}"
+            echo -e "${RED} \"That Weird Package Manager\"${NC}"
             echo ""
-            echo -e "${PURPLE}parcel${NC} ${BLUE}list${NC}"
+            echo -e "${PURPLE}cinna${NC} ${BLUE}list${NC}"
             echo "  Gets a list of packages from the repo, currently set to \"${REPO}\""
             ;;
         *)
@@ -315,7 +315,7 @@ function list_packages() {
 case "$1" in
     "update")
         check_for_updates
-        update_parcel
+        update_cinna
         ;;
     "get")
         check_for_updates
@@ -336,8 +336,30 @@ case "$1" in
         info_package "$2"
         ;;
     "list")
-        check_for_updates
-        list_packages
+        if [ -z "$2" ]; then
+            check_for_updates
+            list_packages
+        else
+            case "$2" in
+                "--installed" | "-i")
+                    counter=1
+
+                    find "$INSTALLDIRECTORY" -maxdepth 1 -type f -printf "%f\n" | while read -r line; do
+                        case $((counter % 5)) in
+                            1) echo -e "${RED}$line${NC}" ;;
+                            2) echo -e "${GREEN}$line${NC}" ;;
+                            3) echo -e "${YELLOW}$line${NC}" ;;
+                            4) echo -e "${BLUE}$line${NC}" ;;
+                            0) echo -e "${PURPLE}$line${NC}" ;;
+                        esac
+                        ((counter++))
+                    done
+                    ;;
+                *)
+                    echo -e "${RED}${BOLD}Error:${NC} Unknown command: $2"
+                    ;;
+            esac
+        fi
         ;;
     "--help" | "-h")
         if [ -z "$2" ]; then
@@ -354,14 +376,14 @@ case "$1" in
         fi
         ;;
     "--version" | "-v")
-        echo -e "${RED}                          _ "
-        echo -e "${GREEN} _ __   __ _ _ __ ___ ___| |"
-        echo -e "${YELLOW}| '_ \ / _\` | '__/ __/ _ \ |"
-        echo -e "${BLUE}| |_) | (_| | | | (_|  __/ |"
-        echo -e "${PURPLE}| .__/ \__,_|_|  \___\___|_|"
-        echo -e "${RED}|_|${NC}  \"${GREEN}That Weird Package Manager${NC}\"   "
+        echo -e "${GREEN}       _                   ${NC}"
+        echo -e "${GREEN}   ___(_)_ __  _ __   __ _ ${NC}"
+        echo -e "${YELLOW}  / __| | '_ \| '_ \ / _\` |${NC}"
+        echo -e "${BLUE} | (__| | | | | | | | (_| |${NC}"
+        echo -e "${PURPLE}  \___|_|_| |_|_| |_|\__,_|${NC}"
+        echo -e "${RED} \"That Weird Package Manager\"${NC}"
         echo ""
-        echo -e "${GREEN}Parcel${NC} ${PURPLE}v$VERSION${NC} (codename '$VERSIONTITLE')"
+        echo -e "${GREEN}Cinna${NC} ${PURPLE}v$VERSION${NC} (codename '$VERSIONTITLE')"
         echo -e "Created by ${BLUE}NoodleDX${NC}"
         ;;
     "config")
@@ -413,12 +435,12 @@ case "$1" in
         esac
         ;;
     "credits")
-        echo -e "${RED}                          _ "
-        echo -e "${GREEN} _ __   __ _ _ __ ___ ___| |"
-        echo -e "${YELLOW}| '_ \ / _\` | '__/ __/ _ \ |"
-        echo -e "${BLUE}| |_) | (_| | | | (_|  __/ |"
-        echo -e "${PURPLE}| .__/ \__,_|_|  \___\___|_|"
-        echo -e "${RED}|_|${NC}  \"${GREEN}That Weird Package Manager${NC}\"   "
+        echo -e "${GREEN}       _                   ${NC}"
+        echo -e "${GREEN}   ___(_)_ __  _ __   __ _ ${NC}"
+        echo -e "${YELLOW}  / __| | '_ \| '_ \ / _\` |${NC}"
+        echo -e "${BLUE} | (__| | | | | | | | (_| |${NC}"
+        echo -e "${PURPLE}  \___|_|_| |_|_| |_|\__,_|${NC}"
+        echo -e "${RED} \"That Weird Package Manager\"${NC}"
         echo ""
         sleep 1
         echo "Credits"
@@ -438,17 +460,17 @@ case "$1" in
         sleep 1
         echo "  The people behind Linux - Making Bash (and linux I guess)"
         sleep 1
-        echo "  And thank YOU, for using Parcel !!"
+        echo "  And thank YOU, for using Cinna !!"
         sleep .5
         echo "  === THE END ==="
         ;;
     "debug")
         case $2 in
             "test_connection_main")
-                if wget --spider "https://parcel.pixspla.net/" 2>/dev/null; then
-                    echo -e "${GREEN}Successfully connected to the Parcel servers.${NC}"
+                if wget --spider "https://cinna.pixspla.net/" 2>/dev/null; then
+                    echo -e "${GREEN}Successfully connected to the Cinna servers.${NC}"
                 else
-                    echo -e "${RED}${BOLD}Error: Cannot connect to https://parcel.pixspla.net/${NC}"
+                    echo -e "${RED}${BOLD}Error: Cannot connect to https://cinna.pixspla.net/${NC}"
                 fi
                 ;;
             "test_connection_repo")
