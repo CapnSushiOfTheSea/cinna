@@ -1,14 +1,12 @@
-  I need to rename this because ap**PARENTLY** parcel is TAKEN by [this](https://github.com/parcel-bundler/parcel) (check it out its pretty nice actually) grrr
-
-parcel
+cinna(mon)
 ======
 
-\> about parcel
+\> about cinna
 ---------------
 
-parcel is a package manager created by none other than I for simplifying the installation and management of custom programs.
+cinna is a package manager created by none other than I for simplifying the installation and management of custom programs.
 
-[\> repo](https://parcel.pixspla.net/repo)
+[\> repo](https://cinna.pixspla.net/repo)
 
 \> installation
 ---------------
@@ -23,65 +21,65 @@ run the following command:
     $ sudo make install
 ```
 
-after that, check if parcel is fully installed by running:
+after that, check if cinna is fully installed by running:
 ```sh
-    $ parcel --version
+    $ cinna --version
 ```
-you can then use parcel by running:
+you can then use cinna by running:
 ```sh
-    $ parcel
+    $ cinna
       or
-    $ parcel --help
+    $ cinna --help
 ```
 \> usage
 --------
 this is outdated, so to see a list of commands, run:
 ```sh
-    $ parcel --help
+    $ cinna --help
 ```
-### $ parcel get
+### $ cinna get
 
 this is the main command for installing packages.
 ```sh
-    $ parcel get [name]
+    $ cinna get [name]
 ```
-### $ parcel remove
+### $ cinna remove
 
 this command will let you remove any package you have installed.
 ```sh
-    parcel remove [name]
+    cinna remove [name]
 ```
-### $ parcel upgrade
+### $ cinna upgrade
 
 this command will uninstall and reinstall any package, to get the latest version.
 ```sh
-    parcel upgrade [name]
+    cinna upgrade [name]
 ```
-### $ parcel info
+### $ cinna info
 
 this command will display the info of any package on the repo.
 ```sh
-    parcel info [name]
+    cinna info [name]
 ```
-### $ parcel update
+### $ cinna update
 
-this command will simply update parcel.
+this command will simply update cinna.
 ```sh
-    parcel update
+    cinna update
 ```
-### $ parcel --help, -h
+### $ cinna --help, -h
 
 this command will display a list of commands and what they do.
 ```sh
-    $ parcel --help
+    $ cinna --help
       or
-    $ parcel -h
+    $ cinna -h
 ```
-### $ parcel --version, -v
+### $ cinna --version, -v
 
-this command will show you parcel's version.
+this command will show you cinna's version.
 ```sh
-    $ parcel --version
+    $ cinna --version
       or
-    $ parcel -v
+    $ cinna -v
 ```

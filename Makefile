@@ -2,8 +2,8 @@ PREFIX = /usr
 
 install:
 	@mkdir -p $(DESTDIR)$(PREFIX)/bin
-	@cp -p parcel $(DESTDIR)$(PREFIX)/bin/parcel
-	@chmod 755 $(DESTDIR)$(PREFIX)/bin/parcel
+	@cp -p cinna $(DESTDIR)$(PREFIX)/bin/cinna
+	@chmod 755 $(DESTDIR)$(PREFIX)/bin/cinna
 
 uninstall:
-	@rm -rf $(DESTDIR)$(PREFIX)/bin/parcel
+	@rm -rf $(DESTDIR)$(PREFIX)/bin/cinna
