@@ -22,8 +22,8 @@ done
 INSTALLDIRECTORY="$HOME/.program_files"
 CFG="$HOME/.cinna_config"
 REPO="https://cinna.pixspla.net"
-VERSION="1.5"
-VERSIONTITLE="amber"
+VERSION="1.4"
+VERSIONTITLE="borderline"
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
