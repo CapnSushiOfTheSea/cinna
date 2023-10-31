@@ -494,7 +494,7 @@ case "$1" in
             "test_download")
                 read -p "Does the package \"cls\" exist in your repo? [y/n] " input
                 if [ $input == "y" ]; then
-                    if get_package "cls" >/dev/null; then
+                    if get_packages "cls" >/dev/null; then
                         echo -e "${GREEN}Successfully downloaded file.${NC}"
                         sleep .5
                         remove_package cls >/dev/null
@@ -505,7 +505,7 @@ case "$1" in
                     read -p "Do you have another package for testing? [y/n] " input
                     if [ $input = y ]; then
                         read -p "What is it's name? " input
-                        if get_package "$input" >/dev/null; then
+                        if get_packages "$input" >/dev/null; then
                             echo -e "${GREEN}Successfully downloaded file.${NC}"
                             sleep .5
                             remove_package $input >/dev/null
