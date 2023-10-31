@@ -309,6 +309,32 @@ function list_packages() {
     fi
 }
 
+function cinna_gui() {
+    action=$(zenity --list --title="Cinna GUI" --text="Select an action" --column="Action" "Install" "Remove" "Upgrade" "Package Info")
+
+    case $action in
+        "Install")
+            package_name=$(zenity --entry --title="Install Package" --text="Enter the package name:")
+            get_packages "$package_name"
+            ;;
+        "Remove")
+            package_name=$(zenity --entry --title="Remove Package" --text="Enter the package name:")
+            remove_packages "$package_name"
+            ;;
+        "Upgrade")
+            package_name=$(zenity --entry --title="Upgrade Package" --text="Enter the package name:")
+            upgrade_package "$package_name"
+            ;;
+        "Package Info")
+            package_name=$(zenity --entry --title="Package Info" --text="Enter the package name:")
+            info_package "$package_name"
+            ;;
+        *)
+            zenity --error --text="Invalid option selected"
+            ;;
+    esac
+}
+
 case "$1" in
     "update")
         check_for_updates
@@ -566,6 +592,14 @@ case "$1" in
                     logo_colours
                     ;;
             esac
+        fi
+        ;;
+    "gui")
+        if ! command_exists "zenity"; then
+            echo -e "${RED}${BOLD}Error:${NC} Zenity is not installed. Please install it to use this function."
+            exit 1
+        else
+            cinna_gui
         fi
         ;;
     "")
