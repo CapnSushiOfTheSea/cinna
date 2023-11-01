@@ -4,6 +4,8 @@ cinna(mon)
 \> about cinna
 ---------------
 
+<sup><sub>(the name is TOTALLY not 'cinna' because of sanrio's cinnamoroll just uh shhhhhh)</sub></sup>
+
 cinna is a package manager created by none other than I for simplifying the installation and management of custom programs.
 
 [\> repo](https://cinna.pixspla.net/repo)
