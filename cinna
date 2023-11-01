@@ -223,18 +223,39 @@ function info_package() {
     package_name="$1"
     package_info_url="$REPO/repo/packages/$package_name/metadata"
 
-    if wget --spider "$package_info_url" 2>/dev/null; then
-        wget -N "$package_info_url" -O "$INSTALLDIRECTORY/$package_name-info.txt" 2> /dev/null
+    if [ "$gui" = "true" ]; then
+        if wget --spider "$package_info_url" 2>/dev/null; then
+            wget -N "$package_info_url" -O "$INSTALLDIRECTORY/$package_name-info.txt" 2> /dev/null
 
-        while IFS= read -r line; do
-            key=$(echo "$line" | cut -d'=' -f1 | tr -d '[:space:]')
-            value=$(echo "$line" | cut -d'=' -f2- | sed 's/^ *//')
-            echo -e "${YELLOW}${key}:${NC} ${PURPLE}${value}${NC}"
-        done < "$INSTALLDIRECTORY/$package_name-info.txt"
-        
-        rm "$INSTALLDIRECTORY/$package_name-info.txt"
+            content=""
+            while IFS= read -r line; do
+                key=$(echo "$line" | cut -d'=' -f1 | tr -d '[:space:]')
+                value=$(echo "$line" | cut -d'=' -f2- | sed 's/^ *//')
+                content="$content\n${key}: ${value}"
+            done < "$INSTALLDIRECTORY/$package_name-info.txt"
+
+            zenity --info --title="Package Info: $package_name" --text="$content"
+            
+            rm "$INSTALLDIRECTORY/$package_name-info.txt"
+            exit_code="CN_SUC"
+        else
+            zenity --error --title="Error" --text="Package info for $package_name not found."
+            exit_code="CN_NFND"
+        fi
     else
-        echo -e "${RED}${BOLD}Error:${NC} Package info for ${GREEN}$package_name${NC} not found."
+        if wget --spider "$package_info_url" 2>/dev/null; then
+            wget -N "$package_info_url" -O "$INSTALLDIRECTORY/$package_name-info.txt" 2> /dev/null
+
+            while IFS= read -r line; do
+                key=$(echo "$line" | cut -d'=' -f1 | tr -d '[:space:]')
+                value=$(echo "$line" | cut -d'=' -f2- | sed 's/^ *//')
+                echo -e "${YELLOW}${key}:${NC} ${PURPLE}${value}${NC}"
+            done < "$INSTALLDIRECTORY/$package_name-info.txt"
+            
+            rm "$INSTALLDIRECTORY/$package_name-info.txt"
+        else
+            echo -e "${RED}${BOLD}Error:${NC} Package info for ${GREEN}$package_name${NC} not found."
+        fi
     fi
 }
 
@@ -441,7 +462,7 @@ function cinna_gui() {
                     zenity --error --title="Error" --text="Failed to install the package.\Package $package_name not found."
                     ;;
                 *)
-                    zenity --error --title="Error" --text="Failed to removed the package.\nUnknown error."
+                    zenity --error --title="Error" --text="Failed to remove the package.\nUnknown error."
                     ;;
             esac
             ;;
@@ -467,7 +488,18 @@ function cinna_gui() {
             esac
             package_name=$(zenity --entry --title="Package Info" --text="Enter the package name:")
             [[ "$?" != "0" ]] && exit 1
-            info_package "$package_name"
+            info_package "$package_name" >> /dev/null
+            case $exit_code in
+                "CN_SUC")
+                    :
+                    ;;
+                "CN_NFND")
+                    zenity --error --title="Error" --text="Failed to get the package info.\Package info for $package_name not found."
+                    ;;
+                *)
+                    zenity --error --title="Error" --text="Failed to get the package info.\nUnknown error."
+                    ;;
+            esac
             ;;
         *)
             zenity --error --text="Invalid option selected"
