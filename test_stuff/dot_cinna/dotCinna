@@ -1,0 +1,47 @@
+#!/bin/bash
+# oh baby a triple
+
+INSTALLDIRECTORY="$HOME/.program_files"
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+BLUE='\033[0;34m'
+PURPLE='\033[0;35m'
+NC='\033[0m'
+BOLD='\033[1m'
+DIM='\033[2m'
+ITALIC='\033[3m'
+UNDERLINE='\033[4m'
+BLINKING='\033[5m'
+REVERSE='\033[7m'
+INVISIBLE='\033[8m'
+
+function theThingWhatDoINameThisLMAO() {
+    if [[ -f "hello.cinna" ]]; then
+        mkdir -p "$INSTALLDIRECTORY"
+
+        echo -e "Installing package ${GREEN}hello${NC}"
+        echo -e "Unzipping ${GREEN}hello.cinna${NC}"
+        unzip "hello.cinna" -d "$INSTALLDIRECTORY" > /dev/null
+
+        if [[ -f "$INSTALLDIRECTORY/hello-files.zip" ]]; then
+            echo -e "Unzipping ${GREEN}hello-files.zip${NC}"
+            unzip "$INSTALLDIRECTORY/hello-files.zip" -d "$INSTALLDIRECTORY/hello-files" > /dev/null
+            echo "Cleaning up ZIP file..."
+            rm "$INSTALLDIRECTORY/hello-files.zip"
+        fi
+
+        if [[ -f "$INSTALLDIRECTORY/metadata" ]]; then
+            echo "Cleaning up meta file..."
+            rm "$INSTALLDIRECTORY/metadata"
+        fi
+
+        chmod +x "$INSTALLDIRECTORY/hello"
+        echo -e "Package ${GREEN}hello${NC} installed successfully."
+    else
+        echo -e "${RED}${BOLD}Error:${NC} Package ${GREEN}hello.cinna${NC} not found."
+    fi
+}
+
+theThingWhatDoINameThisLMAO
