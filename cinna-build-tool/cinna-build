@@ -29,15 +29,18 @@ if [ -f "$1" ]; then
         echo "    echo \"Error: Python is not installed.\"" >> "$launcher_script"
         echo "fi" >> "$launcher_script"
         chmod +x "$launcher_script"
-    elif [[ "$1" == *.c ]]; then
-        mkdir -p "$export_dir"
-        if command -v gcc &>/dev/null; then
-            gcc "$1"
-            mv a.out "$export_dir/$file_name_noext"
-        else
-            echo "Error: Cannot build C application: GCC not installed."
-            exit 1
-        fi
+    # elif [[ "$1" == *.c ]]; then
+    #     mkdir -p "$export_dir"
+    #     if command -v gcc &>/dev/null; then
+    #         gcc "$1"
+    #         mv a.out "$export_dir/$file_name_noext"
+    #     else
+    #         echo "Error: Cannot build C application: GCC not installed."
+    #         exit 1
+    #     fi
+    # 
+    # Okay I think this is like properly broken 
+    # this does NOT seem to work at all :innocent:
     else
         echo "Unsupported file type: $1"
         exit 1
