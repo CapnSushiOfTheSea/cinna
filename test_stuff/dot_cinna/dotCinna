@@ -18,30 +18,36 @@ REVERSE='\033[7m'
 INVISIBLE='\033[8m'
 
 function theThingWhatDoINameThisLMAO() {
-    if [[ -f "hello.cinna" ]]; then
-        mkdir -p "$INSTALLDIRECTORY"
+    if [[ -f "$1" ]]; then
+        if [[ "$1" == *.cinna ]]; then
+            file_name=$(basename -- "$1")
+            file_name_noext="${file_name%.*}"
+            mkdir -p "$INSTALLDIRECTORY"
 
-        echo -e "Installing package ${GREEN}hello${NC}"
-        echo -e "Unzipping ${GREEN}hello.cinna${NC}"
-        unzip "hello.cinna" -d "$INSTALLDIRECTORY" > /dev/null
+            echo -e "Installing package ${GREEN}$file_name_noext${NC}"
+            echo -e "Unzipping ${GREEN}$file_name${NC}"
+            unzip "$file_name" -d "$INSTALLDIRECTORY" > /dev/null
 
-        if [[ -f "$INSTALLDIRECTORY/hello-files.zip" ]]; then
-            echo -e "Unzipping ${GREEN}hello-files.zip${NC}"
-            unzip "$INSTALLDIRECTORY/hello-files.zip" -d "$INSTALLDIRECTORY/hello-files" > /dev/null
-            echo "Cleaning up ZIP file..."
-            rm "$INSTALLDIRECTORY/hello-files.zip"
+            if [[ -f "$INSTALLDIRECTORY/$file_name_noext-files.zip" ]]; then
+                echo -e "Unzipping ${GREEN}$file_name_noext-files.zip${NC}"
+                unzip "$INSTALLDIRECTORY/$file_name_noext-files.zip" -d "$INSTALLDIRECTORY/$file_name_noext-files" > /dev/null
+                echo "Cleaning up ZIP file..."
+                rm "$INSTALLDIRECTORY/$file_name_noext-files.zip"
+            fi
+
+            if [[ -f "$INSTALLDIRECTORY/metadata" ]]; then
+                echo "Cleaning up meta file..."
+                rm "$INSTALLDIRECTORY/metadata"
+            fi
+
+            chmod +x "$INSTALLDIRECTORY/$file_name_noext"
+            echo -e "Package ${GREEN}$file_name_noext${NC} installed successfully."
+        else
+            echo -e "${RED}${BOLD}Error:${NC} Package ${GREEN}$file_name_noext${NC} could not be installed: Incorrect file type."
         fi
-
-        if [[ -f "$INSTALLDIRECTORY/metadata" ]]; then
-            echo "Cleaning up meta file..."
-            rm "$INSTALLDIRECTORY/metadata"
-        fi
-
-        chmod +x "$INSTALLDIRECTORY/hello"
-        echo -e "Package ${GREEN}hello${NC} installed successfully."
     else
-        echo -e "${RED}${BOLD}Error:${NC} Package ${GREEN}hello.cinna${NC} not found."
+        echo -e "${RED}${BOLD}Error:${NC} Package ${GREEN}$file_name${NC} not found."
     fi
 }
 
-theThingWhatDoINameThisLMAO
+theThingWhatDoINameThisLMAO $1
