@@ -1,0 +1,67 @@
+#!/bin/bash
+
+file_name=$(basename -- "$1")
+file_name_noext="${file_name%.*}"
+
+export_dir="$HOME/cinna_export/$file_name_noext"
+
+if [ -f "$1" ]; then
+    if [[ "$1" == *.sh ]]; then
+        mkdir -p "$export_dir" 
+        cp "$1" "$export_dir/$file_name_noext" 
+    elif [[ "$1" == *.py ]]; then
+        mkdir -p "$export_dir" 
+        zip_file="$export_dir/$file_name_noext-files.zip"
+        zip -j "$zip_file" "$1"
+        
+        launcher_script="$export_dir/$file_name_noext"
+        echo "#!/bin/bash" > "$launcher_script"
+        echo "PROGRAM_FILES_DIR=\"\$HOME/.program_files\"" >> "$launcher_script"
+        echo "CONFIG_FILE=\"\$HOME/.cinna_config\"" >> "$launcher_script"
+        echo "if [ -f \"\$CONFIG_FILE\" ]; then" >> "$launcher_script"
+        echo "    source \"\$CONFIG_FILE\"" >> "$launcher_script"
+        echo "fi" >> "$launcher_script"
+        echo "if command -v python3 &>/dev/null; then" >> "$launcher_script"
+        echo "    python3 \"\$PROGRAM_FILES_DIR/$file_name_noext-files/$file_name_noext.py\"" >> "$launcher_script"
+        echo "elif command -v python &>/dev/null; then" >> "$launcher_script"
+        echo "    python \"\$PROGRAM_FILES_DIR/$file_name_noext-files/$file_name_noext.py\"" >> "$launcher_script"
+        echo "else" >> "$launcher_script"
+        echo "    echo \"Error: Python is not installed.\"" >> "$launcher_script"
+        echo "fi" >> "$launcher_script"
+        chmod +x "$launcher_script"
+    elif [[ "$1" == *.c ]]; then
+        mkdir -p "$export_dir"
+        if command -v gcc &>/dev/null; then
+            gcc "$1"
+            mv a.out "$export_dir/$file_name_noext"
+        else
+            echo "Error: Cannot build C application: GCC not installed."
+            exit 1
+        fi
+    else
+        echo "Unsupported file type: $1"
+        exit 1
+    fi
+else
+    echo "Could not find file: $1"
+    exit 1
+fi
+
+echo "Metadata"
+echo "--------"
+read -p "Package name: " name
+read -p "Author: " author
+read -p "Description: " description
+
+echo "Name = $name" >> "$export_dir/metadata"
+echo "Author = $author" >> "$export_dir/metadata"
+echo "Description = $description" >> "$export_dir/metadata"
+
+cd "$export_dir"
+if zip -r $export_dir.zip .; then
+    echo "Success"
+    rm -rf "$export_dir"
+    mv "$export_dir.zip" "$export_dir.cinna"
+else
+    echo "Failed to zip folder."
+fi
