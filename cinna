@@ -13,6 +13,19 @@ command_exists() {
     command -v "$1" >/dev/null 2>&1
 }
 
+human_print(){
+while read B dummy; do
+  [ $B -lt 1024 ] && echo ${B} bytes && break
+  KB=$(((B+512)/1024))
+  [ $KB -lt 1024 ] && echo ${KB} kilobytes && break
+  MB=$(((KB+512)/1024))
+  [ $MB -lt 1024 ] && echo ${MB} megabytes && break
+  GB=$(((MB+512)/1024))
+  [ $GB -lt 1024 ] && echo ${GB} gigabytes && break
+  echo $(((GB+512)/1024)) terabytes
+done
+}
+
 for dependency in "${dependencies[@]}"; do
     if ! command_exists "$dependency"; then
         echo -e "${RED}${BOLD}Error:${NC} '$dependency' is not installed. Please install it before running this script."
@@ -138,11 +151,15 @@ function get_packages() {
                     mkdir -p "$INSTALLDIRECTORY"
 
                     echo -e "Installing package ${GREEN}$package_name${NC}"
-                    echo -e "Getting ${GREEN}'$package_url/$package_name'${NC}"
+                    bytescount=`wget "$package_url/$package_name" --spider --server-response -O - 2>&1 | sed -ne '/Content-Length/{s/.*: //;p}'`
+                    size=`echo $bytescount | human_print`
+                    echo -e "Getting ${GREEN}'$package_url/$package_name'${NC} ($size)"
                     wget "$package_url/$package_name" -P "$INSTALLDIRECTORY" 2> /dev/null
 
                     if wget --spider "$package_url/$package_name-files.zip" 2>/dev/null; then
-                        echo -e "Getting ${GREEN}'$package_url/$package_name-files.zip'${NC}"
+                        bytescount=`wget "$package_url/$package_name-files.zip" --spider --server-response -O - 2>&1 | sed -ne '/Content-Length/{s/.*: //;p}'`
+                        size=`echo $bytescount | human_print`
+                        echo -e "Getting ${GREEN}'$package_url/$package_name-files.zip'${NC} ($size)"
                         wget "$package_url/$package_name-files.zip" -P "$INSTALLDIRECTORY" 2> /dev/null
                         unzip "$INSTALLDIRECTORY/$package_name-files.zip" -d "$INSTALLDIRECTORY/$package_name-files" > /dev/null
                         echo "Cleaning up..."
