@@ -6,13 +6,20 @@
 #  \___|_|_| |_|_| |_|\__,_|
 # "That Weird Package Manager"
 
+#Some variables: 
+#gui is the variable telling the program whether or not you're in GUI mode.
+#dependencies is just a list of things the program needs to run, otherwise it will refuse to work
 gui="false"
 dependencies=("wget" "curl")
 
+#Simple function that checks whether or not a command exists, used for dependencies
 command_exists() {
     command -v "$1" >/dev/null 2>&1
 }
 
+#Function found on StackOverflow. 
+#Completely full of black magic but it makes byte numbers look nicer
+#What does this even DO
 human_print(){
 while read B dummy; do
   [ $B -lt 1024 ] && echo ${B} bytes && break
@@ -26,6 +33,7 @@ while read B dummy; do
 done
 }
 
+#Checks dependencies, if any aren't avaliable, than quits
 for dependency in "${dependencies[@]}"; do
     if ! command_exists "$dependency"; then
         echo -e "${RED}${BOLD}Error:${NC} '$dependency' is not installed. Please install it before running this script."
@@ -33,12 +41,14 @@ for dependency in "${dependencies[@]}"; do
     fi
 done
 
+#Some important variables, you can probably tell what they do
 INSTALLDIRECTORY="$HOME/.program_files"
 CFG="$HOME/.cinna_config"
 REPO="https://cinna.pixspla.net"
 VERSION="1.5"
 VERSIONTITLE="amber"
 
+#Styling.
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
@@ -53,6 +63,7 @@ BLINKING='\033[5m'
 REVERSE='\033[7m'
 INVISIBLE='\033[8m'
 
+#Prints the logo with COLOURS
 function logo_colours() {
     echo -e "${GREEN}       _                   ${NC}"
     echo -e "${GREEN}   ___(_)_ __  _ __   __ _ ${NC}"
@@ -62,6 +73,7 @@ function logo_colours() {
     echo -e "${RED} \"That Weird Package Manager\"${NC}"
 }
 
+#Prints the logo
 function logo() {
     echo -e "       _                   "
     echo -e "   ___(_)_ __  _ __   __ _ "
@@ -71,12 +83,14 @@ function logo() {
     echo -e " \"That Weird Package Manager\""
 }
 
+#If a config file is there, load it's stuff
 function read_config() {
     if [ -f "$CFG" ]; then
         source "$CFG"
     fi
 }
 
+#Checks the server to see if there's a new version of Cinna avaliable.
 function check_for_updates() {
     if wget --spider "https://cinna.pixspla.net/" 2>/dev/null; then
         latest_version=$(curl -s "https://cinna.pixspla.net/version")
@@ -100,6 +114,7 @@ function check_for_updates() {
     fi
 }
 
+#Takes the online copy of Cinna and replaces the installed version with it.
 function update_cinna() {
     if wget --spider "https://cinna.pixspla.net/cinna" 2>/dev/null; then
         echo -e "Updating Cinna..."
@@ -119,14 +134,17 @@ function update_cinna() {
 
 read_config
 
+#Tells you if the install directory is not in your PATH.
 if [[ ! ":$PATH:" == *":$INSTALLDIRECTORY:"* ]]; then
     echo -e "${RED}Warning:${NC} $INSTALLDIRECTORY is not in your PATH. Consider adding it to your PATH."
 fi
 
+#Function for getting and installing packages.
 function get_packages() {
     packages=("$@")
 
     for package_name in "${packages[@]}"; do
+        #If the package name ends in .clist, then read it from a file, and install packages from that list
         if [[ $package_name == *.clist ]]; then
             if [[ -f "$package_name" ]]; then
                 while IFS= read -r line; do
@@ -141,6 +159,7 @@ function get_packages() {
                 exit_code="CN_FNFND"
             fi
         else
+            #Gets files and places them in the folder. Simple enough/
             package_url="$REPO/repo/packages/$package_name"
 
             if [[ -f "$INSTALLDIRECTORY/$package_name" ]]; then
@@ -178,6 +197,7 @@ function get_packages() {
     done
 }
 
+#If the package exists, remove it.
 function remove_packages() {
     packages=("$@")
 
@@ -196,6 +216,7 @@ function remove_packages() {
     done
 }
 
+#Reinstalls an installed package.
 function upgrade_package() {
     package_name="$1"
     package_url="$REPO/repo/packages/$package_name"
@@ -236,6 +257,7 @@ function upgrade_package() {
     fi
 }
 
+#Gets the metadata of a package and prints it line by line.
 function info_package() {
     package_name="$1"
     package_info_url="$REPO/repo/packages/$package_name/metadata"
@@ -276,6 +298,7 @@ function info_package() {
     fi
 }
 
+#Displays a different help message depending on what is given. (e.g. help_message "main")
 function help_message() {
     case $1 in
         "main")
@@ -350,6 +373,7 @@ function help_message() {
         esac
 }
 
+#Prints the contents of [repo url]/repo/packages/packages.txt
 function list_packages() {
     packages_file="$REPO/repo/packages/packages.txt"
 
@@ -364,6 +388,7 @@ function list_packages() {
     fi
 }
 
+#The GUI mode's main function. Requires Zenity, but the program will refuse to load the GUI if it is not found
 function cinna_gui() {
     gui="true"
     action=$(zenity --list --title="Cinna GUI" --text="Cinna - Select an action" --column="Action" "Install" "Remove" "Upgrade" "Package Info")
@@ -524,6 +549,8 @@ function cinna_gui() {
     esac
 }
 
+#The main function of the program. Everything is ran through this. 
+#Checks what the argument is and does the corresponding action.
 case "$1" in
     "update")
         check_for_updates
