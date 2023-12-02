@@ -18,7 +18,8 @@ command_exists() {
 }
 
 #Function found on StackOverflow. 
-#Completely full of black magic but it makes byte numbers look nicer
+#Completely full of black magic but who cares
+#It makes byte numbers look nicer
 #What does this even DO
 human_print(){
 while read B dummy; do
