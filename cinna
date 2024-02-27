@@ -45,7 +45,10 @@ done
 #Some important variables, you can probably tell what they do
 INSTALLDIRECTORY="$HOME/.program_files"
 CFG="$HOME/.cinna_config"
-REPO="https://cinna.pixspla.net"
+
+#Cinna is no longer maintained. Please use your own repo for this.
+REPO=""
+
 VERSION="1.5"
 VERSIONTITLE="amber"
 
