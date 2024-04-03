@@ -679,7 +679,7 @@ case "$1" in
         echo "Credits"
         echo "-------------"
         sleep 1
-        echo "  NoodleDX - Creator"
+        echo "  CapnSushiOfTheSea - Creator"
         sleep 1
         echo "  BoxelLogica - Being a cool pal"
         sleep 1
