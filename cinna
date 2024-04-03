@@ -681,7 +681,7 @@ case "$1" in
         sleep 1
         echo "  NoodleDX - Creator"
         sleep 1
-        echo "  BoxelLogica - Being the best boyfriend ever"
+        echo "  BoxelLogica - Being a cool pal"
         sleep 1
         echo "  Niforru - First contributor; made makefile"
         sleep 1
